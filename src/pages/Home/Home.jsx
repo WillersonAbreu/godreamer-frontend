@@ -6,12 +6,11 @@ import {
   Container,
   ImageContainer,
   LoginContainerTitle,
-  LoginFormContainer,
-  StyledLoginForm,
-  StyledLoginButton
+  LoginFormContainer
 } from './HomeStyles';
 
 import LoginForm from './LoginForm/LoginForm';
+import RegisterForm from './RegisterForm/RegisterForm';
 
 export default function Home() {
   return (
@@ -20,6 +19,9 @@ export default function Home() {
       <LoginFormContainer>
         <LoginContainerTitle>Faça seu login</LoginContainerTitle>
         <LoginForm />
+
+        <LoginContainerTitle>Faça seu cadastro</LoginContainerTitle>
+        <RegisterForm />
       </LoginFormContainer>
     </Container>
   );

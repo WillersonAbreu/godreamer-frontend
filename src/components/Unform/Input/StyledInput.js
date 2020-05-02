@@ -4,7 +4,7 @@ const StyledInput = styled.input`
   outline: none;
   border: 0.5px solid #30cb7e;
 
-  height: 35px;
+  height: 25px;
   width: 100%;
   background-color: white;
   border-radius: 5px;

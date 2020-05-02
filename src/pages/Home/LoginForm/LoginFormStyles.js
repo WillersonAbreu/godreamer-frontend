@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import { Form } from '@unform/web';
 
 export const StyledLoginForm = styled(Form)`
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  flex: 0.25;
+  flex: 0.3;
   height: 50%;
-  width: 100%;
+  width: 95%;
   justify-content: space-between;
 `;
 
@@ -21,4 +22,9 @@ export const StyledLoginButton = styled.button`
   border: 2px solid #1f804f;
   border-radius: 5px;
   color: white;
+
+  &:hover {
+    opacity: 0.7;
+    cursor: pointer;
+  }
 `;
