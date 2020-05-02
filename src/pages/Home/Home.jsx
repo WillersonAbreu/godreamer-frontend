@@ -11,27 +11,15 @@ import {
   StyledLoginButton
 } from './HomeStyles';
 
-import Input from '../../components/Unform/Input/Input';
+import LoginForm from './LoginForm/LoginForm';
 
 export default function Home() {
-  function handleLoginSubmit(data) {
-    console.log(data);
-  }
-
   return (
     <Container>
       <ImageContainer />
       <LoginFormContainer>
         <LoginContainerTitle>Faça seu login</LoginContainerTitle>
-        <StyledLoginForm onSubmit={handleLoginSubmit}>
-          <Input name="email" placeholder="Inser your email" />
-          <Input
-            name="password"
-            placeholder="Insert your password"
-            type="password"
-          />
-          <StyledLoginButton>Login</StyledLoginButton>
-        </StyledLoginForm>
+        <LoginForm />
       </LoginFormContainer>
     </Container>
   );
