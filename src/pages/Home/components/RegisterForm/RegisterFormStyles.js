@@ -55,11 +55,12 @@ export const StyledSelctIcon = styled(CaretDownOutlined)`
 `;
 
 export const RegisterSelectWrapper = styled.div`
-  margin-bottom: 5px;
+  margin: 5px auto;
   display: flex;
   flex-direction: row;
   border-radius: 5px;
 
+  width: 97.5%;
   height: 25px;
 
   &:span {
@@ -73,7 +74,7 @@ export const RegisterSelect = styled(Select)`
   margin-bottom: 5px;
   background-color: white;
   height: 25px;
-  width: 93.5%;
+  width: 95%;
 
   outline: none;
   border-top: 0.5px solid #30cb7e;

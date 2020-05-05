@@ -6,8 +6,8 @@ import { Container, ChildContainer } from './CustomLayoutStyles';
 // Header import
 import Header, {
   StyledLogo,
-  LogoWrapper,
-  RightContainer
+  LogoWrapper
+  // RightContainer
 } from '../Header/HeaderStyles';
 
 // Logo import

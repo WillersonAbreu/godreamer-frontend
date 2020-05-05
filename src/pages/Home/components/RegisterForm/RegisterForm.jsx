@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { CaretDownOutlined } from '@ant-design/icons';
+import React, { useRef } from 'react';
 
 import {
   StyledRegisterButton,
@@ -12,15 +10,45 @@ import {
   StyledSelctIcon
 } from './RegisterFormStyles';
 
-import Datepicker from '../../../components/Unform/Datepicker/ReactDatepicker';
+import Datepicker from '../../../../components/Unform/Datepicker/ReactDatepicker';
+
+// Yup imports
+import * as Yup from 'yup';
 
 export default function RegisterForm() {
-  function handleSubmit(data) {
-    console.log(data);
+  const formRef = useRef(null);
+
+  async function handleSubmit(data) {
+    try {
+      // Remove all previous errors
+      // formRef.current.setErrors({});
+      // Schema to validate the form
+      // const schema = Yup.object().shape({
+      //   email: Yup.string()
+      //     .email()
+      //     .required(),
+      //   password: Yup.string()
+      //     .min(6)
+      //     .required()
+      // });
+      // Validating the form
+      // await schema.validate(data, {
+      //   abortEarly: false
+      // });
+    } catch (error) {
+      // Showing validation errors on
+      // const validationErrors = {};
+      // if (error instanceof Yup.ValidationError) {
+      //   error.inner.forEach(error => {
+      //     validationErrors[error.path] = error.message;
+      //   });
+      //   formRef.current.setErrors(validationErrors);
+      // }
+    }
   }
 
   return (
-    <StyledRegisterForm onSubmit={handleSubmit}>
+    <StyledRegisterForm ref={formRef} onSubmit={handleSubmit}>
       <InputWrapper>
         <RegisterInput name="name" placeholder="Insert your name" />
         <RegisterInput name="email" placeholder="Insert your email" />
@@ -48,7 +76,7 @@ export default function RegisterForm() {
             { value: '2', label: 'Mentor' }
           ]}
         />
-        <StyledSelctIcon for="user_type" />
+        <StyledSelctIcon htmlFor="user_type" />
       </RegisterSelectWrapper>
 
       <StyledRegisterButton>Cadastrar</StyledRegisterButton>

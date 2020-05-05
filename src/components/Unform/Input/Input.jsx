@@ -16,8 +16,13 @@ export default function Input({ name, ...rest }) {
 
   return (
     <>
-      <StyledInput ref={inputRef} defaultValue={defaultValue} {...rest} />
-      {error && <span>{error}</span>}
+      <StyledInput
+        ref={inputRef}
+        defaultValue={defaultValue}
+        className={error ? 'has-error' : ''}
+        {...rest}
+      />
+      {error && <span className="error">{error}</span>}
     </>
   );
 }
