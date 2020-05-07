@@ -15,11 +15,16 @@ import Datepicker from '../../../../components/Unform/Datepicker/ReactDatepicker
 // Yup imports
 import * as Yup from 'yup';
 
+// Services imports
+import UserService from '../../../../services/api/User';
+
 export default function RegisterForm() {
   const formRef = useRef(null);
 
   async function handleSubmit(data) {
     try {
+      const response = await UserService.create(data);
+      console.log(response);
       // Remove all previous errors
       // formRef.current.setErrors({});
       // Schema to validate the form
@@ -36,6 +41,7 @@ export default function RegisterForm() {
       //   abortEarly: false
       // });
     } catch (error) {
+      console.log(error);
       // Showing validation errors on
       // const validationErrors = {};
       // if (error instanceof Yup.ValidationError) {
