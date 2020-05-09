@@ -10,13 +10,13 @@ import {
   StyledSelctIcon
 } from './RegisterFormStyles';
 
-import Datepicker from '../../../../components/Unform/Datepicker/ReactDatepicker';
+import Datepicker from '~/components/Unform/Datepicker/ReactDatepicker';
 
 // Yup imports
 import * as Yup from 'yup';
 
 // Services imports
-import UserService from '../../../../services/api/User';
+import UserService from '~/services/api/User';
 
 export default function RegisterForm() {
   const formRef = useRef(null);

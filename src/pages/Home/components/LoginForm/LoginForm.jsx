@@ -1,25 +1,35 @@
 import React from 'react';
 
 // Components imports
-import Input from '../../../../components/Unform/Input/Input';
+import Input from '~/components/Unform/Input/Input';
 
 // Styles imports
 import { StyledLoginForm, StyledLoginButton } from './LoginFormStyles';
 
 // Services imports
-import AuthService from '../../../../services/api/Auth';
+import AuthService from '~/services/api/Auth';
+
+// Helpers
+import { saveToken } from '~/helpers/AuthHelper';
+
+// History
+import { useHistory, Redirect } from 'react-router-dom';
 
 export default function LoginForm() {
+  const token = localStorage.getItem('token');
+  const history = useHistory();
+
   async function handleLoginSubmit(data) {
     try {
       const response = await AuthService.login(data);
-      console.log(response);
+      saveToken(response.token);
+      history.push('/feed');
     } catch (error) {
       console.log(error);
     }
   }
 
-  return (
+  return token === null ? (
     <StyledLoginForm onSubmit={handleLoginSubmit}>
       <Input name="email" placeholder="Inser your email" />
       <Input
@@ -29,5 +39,7 @@ export default function LoginForm() {
       />
       <StyledLoginButton>Login</StyledLoginButton>
     </StyledLoginForm>
+  ) : (
+    <Redirect to="/feed" />
   );
 }
