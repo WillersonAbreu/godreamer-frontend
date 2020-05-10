@@ -15,17 +15,25 @@ import { saveToken } from '~/helpers/AuthHelper';
 // History
 import { useHistory, Redirect } from 'react-router-dom';
 
+// Redux
+import { useDispatch } from 'react-redux';
+import { Creators as AuthActions } from '~/store/ducks/Auth';
+
 export default function LoginForm() {
   const token = localStorage.getItem('token');
+  const dispatch = useDispatch();
   const history = useHistory();
 
   async function handleLoginSubmit(data) {
     try {
+      dispatch(AuthActions.authStart());
       const response = await AuthService.login(data);
       saveToken(response.token);
+      dispatch(AuthActions.authSuccess(response.token));
       history.push('/feed');
     } catch (error) {
       console.log(error);
+      dispatch(AuthActions.authFail());
     }
   }
 
