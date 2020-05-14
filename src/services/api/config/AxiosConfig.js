@@ -1,7 +1,9 @@
 import { GLOBAL_URL } from '../../../global/shared/config';
 
-const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IldpbGxlcnNvbiIsImVtYWlsIjoid0B3LmNvbSIsImJpcnRoZGF0ZSI6IjIwMTktMDctMjlUMDA6MDA6MDAuMDAwWiIsInVzZXJfdHlwZSI6MiwiaWF0IjoxNTg4ODkyODY1LCJleHAiOjE1ODk0OTc2NjV9.SM4-JNXpnwHpkuErTQow6ZIvkVihceska5aU5hWwDAo';
+// Redux
+import store from '~/store';
+const { token } = store.getState().auth;
+
 export default class AxiosConfig {
   static config = {
     baseURL: GLOBAL_URL,

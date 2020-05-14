@@ -1,5 +1,5 @@
 // React imports
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 // Router DOM imports
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -47,8 +47,9 @@ export default function Routes() {
   return (
     <Router>
       <Switch>
-        <CustomLayout>
+        <CustomLayout isSigned={checkAuth()}>
           <Route exact path="/" component={Home} />
+
           <PrivateRoute isSigned={checkAuth()} path="/feed" component={Feed} />
         </CustomLayout>
       </Switch>

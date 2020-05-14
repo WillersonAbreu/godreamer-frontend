@@ -13,11 +13,17 @@ import Header, {
 // Logo import
 import logo from '../Header/Assets/logo.svg';
 
+// Redux
+import store from '~/store';
+
 export default function CustomLayout(props) {
+  const state = store.getState();
+  const isSigned = !!state.auth.token;
+
   return (
     <Container>
       <Header>
-        <LogoWrapper>
+        <LogoWrapper isSigned={isSigned}>
           <StyledLogo src={logo} />
         </LogoWrapper>
       </Header>

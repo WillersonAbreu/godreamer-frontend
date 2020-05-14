@@ -5,7 +5,7 @@ const StyledHeader = styled.header`
   top: 0;
   right: 0;
   left: 0;
-
+  z-index: 1;
   display: flex;
   position: fixed;
   width: 100%;
@@ -20,7 +20,7 @@ const StyledHeader = styled.header`
 export const LogoWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
+  margin: ${props => (props.isSigned ? 0 : '0 auto')};
 `;
 
 export const StyledLogo = styled.img`

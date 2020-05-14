@@ -1,3 +1,3 @@
-export const GLOBAL_URL = 'http://127.0.0.1:3333';
+export const GLOBAL_URL = 'http://localhost:3333/'; //'https://godreamer.herokuapp.com/';
 
 export const JWT_SECRET = 'segredo';
