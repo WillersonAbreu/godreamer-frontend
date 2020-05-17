@@ -14,7 +14,7 @@ export const GroupsSection = styled.div`
   flex-direction: column;
   width: 15%;
   min-height: 100%;
-  border-right: 1px solid black;
+  /* border-right: 1px solid black; */
   position: fixed;
   left: 0;
 `;
@@ -24,8 +24,8 @@ export const FeedSection = styled.main`
   flex-direction: column;
   width: 69%;
   min-height: 100%;
-  border-left: 1px solid red;
-  border-right: 1px solid red;
+  /* border-left: 1px solid red; */
+  /* border-right: 1px solid red; */
   overflow-y: hidden;
   position: absolute;
   margin-left: 15.35%;
@@ -37,8 +37,8 @@ export const ChatSection = styled.div`
   flex-direction: column;
   width: 15%;
   min-height: 100%;
-  border-left: 1px solid blue;
-  border-right: 1px solid blue;
+  /* border-left: 1px solid blue; */
+  /* border-right: 1px solid blue; */
   position: fixed;
   right: 0;
 `;
