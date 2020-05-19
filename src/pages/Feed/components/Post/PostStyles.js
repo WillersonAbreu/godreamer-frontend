@@ -43,7 +43,7 @@ export const PostText = styled(Paragraph)`
   display: flex;
   flex-direction: column;
   margin: 10px auto;
-  max-width: 70%;
+  max-width: 60%;
   font-size: 2.35vh;
 `;
 

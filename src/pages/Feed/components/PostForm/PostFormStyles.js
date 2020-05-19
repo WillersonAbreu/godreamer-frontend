@@ -38,12 +38,16 @@ export const StyledTextArea = styled(TextArea)`
 export const RightFormContent = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   height: 15vh;
   width: 30%;
   margin: 1vh 1vw;
 `;
 
 export const StyledButton = styled.button`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   color: white;
   font-size: 16px;
   font-weight: bolder;

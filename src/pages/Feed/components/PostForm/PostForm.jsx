@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Ant design import
+import { PictureOutlined, PlaySquareOutlined } from '@ant-design/icons';
+
 // Redux imports
 import { useSelector } from 'react-redux';
 
@@ -53,6 +56,14 @@ function PostForm() {
           name="str_post"
         />
         <RightFormContent>
+          <StyledButton>
+            <PictureOutlined style={{ paddingTop: '0.7vh' }} />
+            Adicionar Foto
+          </StyledButton>
+          <StyledButton>
+            <PlaySquareOutlined style={{ paddingTop: '0.7vh' }} />
+            Adicionar Vídeo
+          </StyledButton>
           <StyledButton>Postar</StyledButton>
         </RightFormContent>
       </StyledForm>
