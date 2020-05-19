@@ -45,18 +45,28 @@ export default function Feed() {
         // Modifying the image url and video url
         response.posts.map(post => {
           transformedPostList.push({
-            User: post.User,
+            User: {
+              ...post.User,
+              ProfileImage:
+                post.User.ProfileImage === null
+                  ? null
+                  : `${GLOBAL_URL}static/profile/${post.User.ProfileImage.image_source}`
+            },
             createdAt: post.createdAt,
             id: post.id,
             str_post: post.str_post,
             url_image:
-              post.url_image && `${GLOBAL_URL}static/post/${post.url_image}`,
+              post.url_image === null
+                ? null
+                : `${GLOBAL_URL}static/post/${post.url_image}`,
+
             url_video:
-              post.url_video && `${GLOBAL_URL}static/post/${post.url_video}`,
+              post.url_video === null
+                ? null
+                : `${GLOBAL_URL}static/post/${post.url_video}`,
             user_id: post.user_id
           });
         });
-        console.log(transformedPostList);
         setPostList(transformedPostList);
       }
     } catch (error) {

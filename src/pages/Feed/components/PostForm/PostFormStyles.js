@@ -7,10 +7,13 @@ export const Container = styled.div`
   display: flex;
   margin: 10px auto;
   height: 20%;
-  width: 95%;
-  border: 0.5px solid #1f804f;
+  width: 80%;
+  /* border: 0.5px solid #1f804f; */
   border-radius: 5px;
   justify-content: center;
+  -webkit-box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
+  -moz-box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
+  box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
 `;
 
 export const StyledForm = styled(Form)`
@@ -38,4 +41,24 @@ export const RightFormContent = styled.div`
   height: 15vh;
   width: 30%;
   margin: 1vh 1vw;
+`;
+
+export const StyledButton = styled.button`
+  color: white;
+  font-size: 16px;
+  font-weight: bolder;
+  outline: none;
+  background-color: #1f804f;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+
+  -webkit-box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
+  -moz-box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
+  box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.7;
+  }
 `;

@@ -8,7 +8,8 @@ import {
   Container,
   StyledForm,
   StyledTextArea,
-  RightFormContent
+  RightFormContent,
+  StyledButton
 } from './PostFormStyles';
 
 // Services
@@ -52,7 +53,7 @@ function PostForm() {
           name="str_post"
         />
         <RightFormContent>
-          <button>Postar</button>
+          <StyledButton>Postar</StyledButton>
         </RightFormContent>
       </StyledForm>
     </Container>

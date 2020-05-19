@@ -1,35 +1,64 @@
 import React from 'react';
 
 // Components
-import { Container, PostHeader, PostBody, PostFooter } from './PostStyles';
+import {
+  Container,
+  PostHeader,
+  PostBody,
+  PostFooter,
+  VideoContainer,
+  ImageContainer,
+  PostText,
+  StyledProfile,
+  StyledTooltip,
+  StyledDateContainer
+} from './PostStyles';
+
+import { GetPostDay } from '~/helpers/DateFormatterHelper';
 
 function Post({ id, str_post, url_image, url_video, createdAt, User }) {
-  const { id: userId, name: userName } = User;
+  const { id: userId, name: userName, ProfileImage } = User;
 
   const BodyContent = ({ url_video, url_image }) => {
-    if (url_image.length) {
-      return <img src={url_image} />;
-    } else if (url_video) {
+    if (url_image !== null && url_video === null) {
+      return <ImageContainer src={url_image} />;
+    } else if (url_video !== null) {
       return (
-        <video width="500" height="200" controls>
+        <VideoContainer controls>
           <source src={url_video} type="video/mp4" />
-        </video>
+        </VideoContainer>
       );
+    } else {
+      return null;
     }
   };
 
   return (
     <Container key={id}>
       <PostHeader>
-        <span>{userId}</span>
-        <span>{userName}</span>
+        {ProfileImage && (
+          <StyledTooltip
+            placement="right"
+            title={`Clique para ver o perfil de ${userName}`}
+          >
+            <StyledProfile size="large" src={ProfileImage} />
+          </StyledTooltip>
+        )}
+        {!ProfileImage && (
+          <StyledTooltip
+            placement="right"
+            title={`Clique para ver o perfil de ${userName}`}
+          >
+            <StyledProfile size="large">{userName[0]}</StyledProfile>
+          </StyledTooltip>
+        )}
       </PostHeader>
       <PostBody>
-        <span>{str_post}</span>
+        <PostText>{str_post}</PostText>
         <BodyContent url_image={url_image} url_video={url_video} />
       </PostBody>
       <PostFooter>
-        <span>{createdAt}</span>
+        <StyledDateContainer>{GetPostDay(createdAt)}</StyledDateContainer>
       </PostFooter>
     </Container>
   );

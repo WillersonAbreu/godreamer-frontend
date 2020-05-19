@@ -1,15 +1,23 @@
+// Styled components import
 import styled from 'styled-components';
+
+// Ant Design imports
+import { Avatar, Tooltip, Typography } from 'antd';
+
+const { Paragraph } = Typography;
 
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin: 10px auto;
   height: 20%;
-  width: 95%;
-  border: 0.5px solid #1f804f;
+  width: 80%;
   border-radius: 5px;
   justify-content: center;
   font-size: 13px;
+  -webkit-box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
+  -moz-box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
+  box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
 `;
 
 export const PostHeader = styled.div`
@@ -31,6 +39,14 @@ export const PostBody = styled.div`
   text-align: center;
 `;
 
+export const PostText = styled(Paragraph)`
+  display: flex;
+  flex-direction: column;
+  margin: 10px auto;
+  max-width: 70%;
+  font-size: 2.35vh;
+`;
+
 export const PostFooter = styled.div`
   display: flex;
   flex-direction: row;
@@ -39,4 +55,36 @@ export const PostFooter = styled.div`
   min-width: 100%;
   min-height: 20%;
   border-top: 0.5px solid #1f804f;
+`;
+
+export const VideoContainer = styled.video`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+`;
+
+export const ImageContainer = styled.img`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+`;
+
+export const StyledProfile = styled(Avatar)`
+  display: flex;
+  border: 0.5px solid #ccc;
+  margin: 1vw 1vw;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.7;
+  }
+`;
+
+export const StyledTooltip = styled(Tooltip)``;
+
+export const StyledDateContainer = styled.div`
+  display: flex;
+  margin: 1vh 1vw;
 `;

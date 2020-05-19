@@ -9,7 +9,7 @@
     "@testing-library/user-event": "^7.1.2",
     "@unform/core": "^2.1.0",
     "@unform/web": "^2.1.0",
-    "antd": "^4.2.0",
+    "antd": "4.2.4",
     "axios": "^0.19.2",
     "date-fns": "^2.13.0",
     "jsonwebtoken": "^8.5.1",

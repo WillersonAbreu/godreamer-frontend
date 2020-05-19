@@ -2,4 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 
+// Ant Design Components Styles
+import 'antd/dist/antd.css';
+
 ReactDOM.render(<App />, document.getElementById('root'));
