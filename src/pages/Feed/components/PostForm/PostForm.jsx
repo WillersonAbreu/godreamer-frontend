@@ -18,6 +18,12 @@ import {
 // Services
 import PostService from '~/services/api/Post';
 
+// Unform imports
+import FileUpload from '~/components/Unform/FileInput/FileInput';
+
+// Yup imports
+import * as Yup from 'yup';
+
 // Socket IO Imports
 import io from 'socket.io-client';
 
@@ -32,17 +38,24 @@ function PostForm() {
 
   const userId = useSelector(state => state.user.id);
 
+  const validation = Yup.object().shape({});
+
   async function handleSubmit(data) {
     try {
-      data.user_id = userId;
-      data.url_image = null;
-      data.url_video = null;
+      console.log(data);
+      // let formData = new FormData();
+      // formData.append('user_id', userId);
+      // formData.append('str_post', data.str_post);
+      // formData.append('url_image', data.url_image);
+      // formData.append('url_video', data.url_video);
 
-      // Making http request to the backend
-      const response = await PostService.create(data);
+      // console.log(formData);
+
+      // // Making http request to the backend
+      // const response = await PostService.create(formData);
 
       // Emit websocket message
-      newPost(data, socket);
+      // newPost(data, socket);
     } catch (error) {
       console.log(error);
     }
@@ -56,14 +69,25 @@ function PostForm() {
           name="str_post"
         />
         <RightFormContent>
-          <StyledButton>
+          <FileUpload
+            icon={<PictureOutlined style={{ paddingTop: '0.7vh' }} />}
+            labelText="Selecione uma imagem"
+            name="url_image"
+          />
+          <FileUpload
+            icon={<PlaySquareOutlined style={{ paddingTop: '0.7vh' }} />}
+            labelText="Selecione um video"
+            name="url_video"
+          />
+
+          {/* <StyledButton>
             <PictureOutlined style={{ paddingTop: '0.7vh' }} />
             Adicionar Foto
           </StyledButton>
           <StyledButton>
             <PlaySquareOutlined style={{ paddingTop: '0.7vh' }} />
             Adicionar Vídeo
-          </StyledButton>
+          </StyledButton> */}
           <StyledButton>Postar</StyledButton>
         </RightFormContent>
       </StyledForm>

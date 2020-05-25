@@ -1,6 +1,9 @@
 // Styled components import
 import styled from 'styled-components';
 
+// Open Graph import
+import OpenGraphComponent from 'opengraph-react';
+
 // Ant Design imports
 import { Avatar, Tooltip, Typography } from 'antd';
 
@@ -88,3 +91,5 @@ export const StyledDateContainer = styled.div`
   display: flex;
   margin: 1vh 1vw;
 `;
+
+export const StyledOpenGraphComponent = styled(OpenGraphComponent)``;
