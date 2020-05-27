@@ -43,16 +43,16 @@ function PostForm() {
   async function handleSubmit(data) {
     try {
       console.log(data);
-      // let formData = new FormData();
-      // formData.append('user_id', userId);
-      // formData.append('str_post', data.str_post);
-      // formData.append('url_image', data.url_image);
-      // formData.append('url_video', data.url_video);
+      let formData = new FormData();
+      formData.append('user_id', userId);
+      formData.append('str_post', data.str_post);
+      formData.append('url_image', data.url_image);
+      formData.append('url_video', data.url_video);
 
-      // console.log(formData);
+      console.log(formData);
 
-      // // Making http request to the backend
-      // const response = await PostService.create(formData);
+      // Making http request to the backend
+      const response = await PostService.create(formData);
 
       // Emit websocket message
       // newPost(data, socket);

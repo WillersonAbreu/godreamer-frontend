@@ -11,9 +11,9 @@ import {
   PostText,
   StyledProfile,
   StyledTooltip,
-  StyledDateContainer,
-  StyledOpenGraphComponent
+  StyledDateContainer
 } from './PostStyles';
+import StyledOpenGraphComponent from '~/components/MetatagsBox/MetatagsBox';
 
 // Helpers import
 import { GetPostDay } from '~/helpers/DateFormatterHelper';
@@ -68,14 +68,7 @@ function Post({ id, str_post, url_image, url_video, createdAt, User }) {
       </PostHeader>
       <PostBody>
         {str_post && <PostText>{str_post}</PostText>}
-        {bodyUrl && <a href={bodyUrl}>{bodyUrl}</a>}
-        {/* {bodyUrl && (
-          <StyledOpenGraphComponent
-            site={bodyUrl}
-            appId="024af144-1c4b-409d-ae40-4e6f53a72c9a"
-            size="medium"
-          />
-        )} */}
+        {bodyUrl && <StyledOpenGraphComponent url={bodyUrl} />}
         <BodyContent url_image={url_image} url_video={url_video} />
       </PostBody>
       <PostFooter>
