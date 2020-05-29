@@ -19,4 +19,17 @@ export default class PostService {
       return error;
     }
   }
+
+  static async update(data, postId) {
+    try {
+      const response = await axios.put(
+        `/posts/${postId}`,
+        data,
+        AxiosConfig.config
+      );
+      return response.data;
+    } catch (error) {
+      return error;
+    }
+  }
 }

@@ -6,6 +6,7 @@ import OpenGraphComponent from 'opengraph-react';
 
 // Ant Design imports
 import { Avatar, Tooltip, Typography } from 'antd';
+import { MoreOutlined } from '@ant-design/icons';
 
 const { Paragraph } = Typography;
 
@@ -93,3 +94,25 @@ export const StyledDateContainer = styled.div`
 `;
 
 export const StyledOpenGraphComponent = styled(OpenGraphComponent)``;
+
+export const PostOptionsIconContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-width: 4%;
+  margin-top: 1%;
+`;
+
+export const PostOptionsIcon = styled(MoreOutlined)`
+  display: flex;
+  padding-top: 1vh;
+
+  svg {
+    height: 5vh;
+    width: 3vh;
+  }
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.7;
+  }
+`;

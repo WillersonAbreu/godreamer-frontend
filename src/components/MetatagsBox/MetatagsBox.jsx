@@ -8,7 +8,8 @@ import {
   ImageContainer,
   MetasBoxContainer,
   PageTitle,
-  PageDescription
+  SpinContainer,
+  StyledSpin
 } from './MetatagsBoxStyles';
 
 function MetatagsBox({ url }) {
@@ -29,29 +30,34 @@ function MetatagsBox({ url }) {
 
   async function contentRender() {}
 
-  return (
-    openGraphObject && (
-      <MetasBoxContainer>
-        <ImageContainer>
-          <PageTitle href={openGraphObject.url}>
-            <img
-              style={{
-                display: 'flex',
-                maxWidth: '90%',
-                margin: '2vh auto'
-              }}
-              src={openGraphObject.image}
-            />
-          </PageTitle>
-        </ImageContainer>
-        <BodyContainer>
-          <PageTitle href={openGraphObject.url}>
-            {openGraphObject.title}
-          </PageTitle>
-          <span>{openGraphObject.description}</span>
-        </BodyContainer>
-      </MetasBoxContainer>
-    )
+  return openGraphObject ? (
+    <MetasBoxContainer>
+      <ImageContainer>
+        <PageTitle href={openGraphObject.url}>
+          <img
+            style={{
+              display: 'flex',
+              maxWidth: '90%',
+              margin: '2vh auto'
+            }}
+            src={openGraphObject.image}
+          />
+        </PageTitle>
+      </ImageContainer>
+      <BodyContainer>
+        <PageTitle href={openGraphObject.url}>
+          {openGraphObject.title}
+        </PageTitle>
+        <span>{openGraphObject.description}</span>
+      </BodyContainer>
+    </MetasBoxContainer>
+  ) : (
+    <MetasBoxContainer>
+      <SpinContainer>
+        <StyledSpin size="large" />
+        <span>Carregando conteúdo...</span>
+      </SpinContainer>
+    </MetasBoxContainer>
   );
 }
 

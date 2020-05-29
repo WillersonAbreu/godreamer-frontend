@@ -46,11 +46,8 @@ export const RightFormContent = styled.div`
 `;
 
 export const StyledButton = styled.button`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   color: white;
-  font-size: 16px;
+  font-size: 85%;
   font-weight: bolder;
   outline: none;
   background-color: #1f804f;

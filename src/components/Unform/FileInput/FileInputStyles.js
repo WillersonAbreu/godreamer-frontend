@@ -8,6 +8,8 @@ export const FileInputContainer = styled.div`
   border: 0.5px solid #30cb7e;
   border-radius: 5px;
   background-color: #30cb7e;
+  text-align: center;
+  font-size: 85%;
 
   &:hover {
     cursor: pointer;

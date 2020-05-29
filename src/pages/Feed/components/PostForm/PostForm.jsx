@@ -40,16 +40,18 @@ function PostForm() {
 
   const validation = Yup.object().shape({});
 
-  async function handleSubmit(data) {
+  async function handleSubmit(data, postId) {
     try {
-      console.log(data);
       let formData = new FormData();
       formData.append('user_id', userId);
       formData.append('str_post', data.str_post);
       formData.append('url_image', data.url_image);
       formData.append('url_video', data.url_video);
 
-      console.log(formData);
+      if (postId) {
+        // Making http request to the backend
+        const response = await PostService.update(formData, postId);
+      }
 
       // Making http request to the backend
       const response = await PostService.create(formData);
@@ -65,7 +67,7 @@ function PostForm() {
     <Container>
       <StyledForm onSubmit={handleSubmit}>
         <StyledTextArea
-          placeholder="Digite aqui as suas melhores idéias hoje"
+          placeholder="Compartilhe aqui as suas melhores idéias hoje"
           name="str_post"
         />
         <RightFormContent>
@@ -79,15 +81,6 @@ function PostForm() {
             labelText="Selecione um video"
             name="url_video"
           />
-
-          {/* <StyledButton>
-            <PictureOutlined style={{ paddingTop: '0.7vh' }} />
-            Adicionar Foto
-          </StyledButton>
-          <StyledButton>
-            <PlaySquareOutlined style={{ paddingTop: '0.7vh' }} />
-            Adicionar Vídeo
-          </StyledButton> */}
           <StyledButton>Postar</StyledButton>
         </RightFormContent>
       </StyledForm>
