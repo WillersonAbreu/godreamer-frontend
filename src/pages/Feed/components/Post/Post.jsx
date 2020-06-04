@@ -116,6 +116,10 @@ function Post({ id, str_post, url_image, url_video, createdAt, User }) {
         visible={visible}
         setLoading={setLoading}
         setVisible={setVisible}
+        str_post={str_post}
+        url_image={url_image}
+        url_video={url_video}
+        post_id={id}
       />
     </Container>
   );

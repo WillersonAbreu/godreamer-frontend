@@ -17,4 +17,8 @@ export default class AxiosConfig {
     responseType: 'json',
     crossDomain: true
   };
+
+  static changeConfig = config => {
+    return { ...this.config, ...config };
+  };
 }

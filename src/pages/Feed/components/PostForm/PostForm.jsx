@@ -40,18 +40,13 @@ function PostForm() {
 
   const validation = Yup.object().shape({});
 
-  async function handleSubmit(data, postId) {
+  async function handleSubmit(data) {
     try {
       let formData = new FormData();
       formData.append('user_id', userId);
       formData.append('str_post', data.str_post);
       formData.append('url_image', data.url_image);
       formData.append('url_video', data.url_video);
-
-      if (postId) {
-        // Making http request to the backend
-        const response = await PostService.update(formData, postId);
-      }
 
       // Making http request to the backend
       const response = await PostService.create(formData);
