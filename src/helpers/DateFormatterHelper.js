@@ -1,5 +1,5 @@
 // Date-FNS imports
-import { formatRelative, subDays, differenceInDays } from 'date-fns';
+import { formatRelative } from 'date-fns';
 const ptBrLocale = require('date-fns/locale/pt-BR/index');
 
 export const GetPostDay = postDate => {

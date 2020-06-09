@@ -14,7 +14,7 @@ import {
 
 function MetatagsBox({ url }) {
   const [openGraphObject, setOpenGraphObject] = useState(null);
-  const [reload, setReload] = useState(false);
+  const [reload] = useState(false);
 
   useEffect(() => {
     fetchMetas();
@@ -28,8 +28,6 @@ function MetatagsBox({ url }) {
     } catch (error) {}
   }
 
-  async function contentRender() {}
-
   return openGraphObject ? (
     <MetasBoxContainer>
       <ImageContainer>
@@ -40,6 +38,7 @@ function MetatagsBox({ url }) {
               maxWidth: '90%',
               margin: '2vh auto'
             }}
+            alt=""
             src={openGraphObject.image}
           />
         </PageTitle>

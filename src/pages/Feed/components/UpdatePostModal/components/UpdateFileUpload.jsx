@@ -1,10 +1,4 @@
-import React, {
-  ChangeEvent,
-  useRef,
-  useEffect,
-  useCallback,
-  useState
-} from 'react';
+import React, { useRef, useEffect, useCallback, useState } from 'react';
 import { useField } from '@unform/core';
 
 // Ant design import
@@ -15,7 +9,7 @@ import { FileInputContainer, StyledInputLabel } from '../UpdatePostModalStyles';
 
 const UpdateInputFile = ({ name, labelText, icon, ...rest }) => {
   const inputRef = useRef(null);
-  const { fieldName, registerField, defaultValue, error } = useField(name);
+  const { fieldName, registerField, defaultValue } = useField(name);
   const [preview, setPreview] = useState(defaultValue);
   const handlePreview = useCallback(e => {
     const file = e.target.files[0];

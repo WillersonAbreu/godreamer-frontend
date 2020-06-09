@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-import FileUpload from '~/components/Unform/FileInput/FileInput';
 import TextArea from '~/components/Unform/TextArea/TextArea';
 import { Form } from '@unform/web';
 

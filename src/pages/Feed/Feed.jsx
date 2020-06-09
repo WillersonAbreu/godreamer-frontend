@@ -19,7 +19,7 @@ import { GLOBAL_URL } from '~/global/shared/config';
 export default function Feed() {
   const userId = useSelector(state => state.user.id);
   const [postList, setPostList] = useState([]);
-  const [refresh, setRefresh] = useState(false);
+  const [refresh] = useState(false);
 
   useEffect(() => {
     fetchPosts();
@@ -66,6 +66,7 @@ export default function Feed() {
                 : `${GLOBAL_URL}static/post/${post.url_video}`,
             user_id: post.user_id
           });
+          return null;
         });
         setPostList(transformedPostList);
       }

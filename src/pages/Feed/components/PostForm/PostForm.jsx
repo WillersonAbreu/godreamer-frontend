@@ -25,16 +25,16 @@ import FileUpload from '~/components/Unform/FileInput/FileInput';
 import * as Yup from 'yup';
 
 // Socket IO Imports
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 
 // Url import
-import { GLOBAL_URL } from '~/global/shared/config';
+// import { GLOBAL_URL } from '~/global/shared/config';
 
 // Imports
-import { newPost } from '~/services/socket/Post';
+// import { newPost } from '~/services/socket/Post';
 
 function PostForm() {
-  const socket = io(GLOBAL_URL);
+  // const socket = io(GLOBAL_URL);
 
   const userId = useSelector(state => state.user.id);
 

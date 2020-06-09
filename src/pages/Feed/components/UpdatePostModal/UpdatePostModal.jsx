@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Ant design imports
-import { Modal, Button } from 'antd';
+import { Modal } from 'antd';
 
 // Unform imports
 import { Form } from '@unform/web';
