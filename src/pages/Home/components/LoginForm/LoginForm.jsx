@@ -1,4 +1,10 @@
-import React from 'react';
+import React, { useRef } from 'react';
+
+// Yup import
+import * as Yup from 'yup';
+
+// Ant design imports
+import { message } from 'antd';
 
 // Components imports
 import Input from '~/components/Unform/Input/Input';
@@ -20,31 +26,60 @@ import { useDispatch } from 'react-redux';
 import { Creators as AuthActions } from '~/store/ducks/Auth';
 
 export default function LoginForm() {
+  const formRef = useRef(null);
   const token = localStorage.getItem('token');
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().required('É necessário inserir o campo email'),
+    password: Yup.string().required('É necessário inserir o campo senha')
+  });
+
   async function handleLoginSubmit(data) {
+    dispatch(AuthActions.authStart());
+
     try {
-      dispatch(AuthActions.authStart());
+      // Remove all previous errors
+      formRef.current.setErrors({});
+
+      await validationSchema.validate(data, {
+        abortEarly: false
+      });
+
       const response = await AuthService.login(data);
-      saveToken(response.token);
-      dispatch(AuthActions.authSuccess(response.token));
-      history.push('/feed');
+
+      // if (!response.token) {
+      //   console.log('Error', response);
+      //   dispatch(AuthActions.authFail());
+      //   message.error('Falha ao realizar login!');
+      // }
+
+      if (response.token) {
+        saveToken(response.token);
+        dispatch(AuthActions.authSuccess(response.token));
+        message.success('Login realizado com sucesso!');
+        history.push('/feed');
+      }
     } catch (error) {
-      console.log(error);
+      // Showing validation errors on
+      const validationErrors = {};
+      if (error instanceof Yup.ValidationError) {
+        error.inner.forEach(error => {
+          validationErrors[error.path] = error.message;
+        });
+        formRef.current.setErrors(validationErrors);
+      }
+
       dispatch(AuthActions.authFail());
+      message.error('Falha ao realizar login!');
     }
   }
 
   return token === null ? (
-    <StyledLoginForm onSubmit={handleLoginSubmit}>
-      <Input name="email" placeholder="Inser your email" />
-      <Input
-        name="password"
-        placeholder="Insert your password"
-        type="password"
-      />
+    <StyledLoginForm ref={formRef} onSubmit={handleLoginSubmit}>
+      <Input name="email" placeholder="Insira seu email" />
+      <Input name="password" placeholder="Insira sua senha" type="password" />
       <StyledLoginButton>Login</StyledLoginButton>
     </StyledLoginForm>
   ) : (

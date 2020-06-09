@@ -17,44 +17,61 @@ import * as Yup from 'yup';
 
 // Services imports
 import UserService from '~/services/api/User';
+import { message } from 'antd';
 
 export default function RegisterForm() {
   const formRef = useRef(null);
 
   async function handleSubmit(data) {
     try {
-      const response = await UserService.create(data);
-      console.log(response);
       // Remove all previous errors
-      // formRef.current.setErrors({});
+      formRef.current.setErrors({});
       // Schema to validate the form
-      // const schema = Yup.object().shape({
-      //   email: Yup.string()
-      //     .email()
-      //     .required(),
-      //   password: Yup.string()
-      //     .min(6)
-      //     .required()
-      // });
+      const schema = Yup.object().shape({
+        name: Yup.string().required('É necessário inserir o nome'),
+        email: Yup.string()
+          .email('Email inválido')
+          .required('É necessário inserir o email'),
+        password: Yup.string().required('É necessário inserir uma senha'),
+        passwordConfirmation: Yup.string().oneOf(
+          [Yup.ref('password'), null],
+          'A senha e confirmar senha devem ser iguais'
+        )
+      });
       // Validating the form
-      // await schema.validate(data, {
-      //   abortEarly: false
-      // });
+      await schema.validate(data, {
+        abortEarly: false
+      });
+
+      const response = await UserService.create(data);
+      message.success('Usuário registrado com sucesso!');
     } catch (error) {
-      console.log(error);
       // Showing validation errors on
-      // const validationErrors = {};
-      // if (error instanceof Yup.ValidationError) {
-      //   error.inner.forEach(error => {
-      //     validationErrors[error.path] = error.message;
-      //   });
-      //   formRef.current.setErrors(validationErrors);
-      // }
+      const validationErrors = {};
+      if (error instanceof Yup.ValidationError) {
+        error.inner.forEach(error => {
+          validationErrors[error.path] = error.message;
+
+          message.error(error.message);
+        });
+
+        // formRef.current.setErrors(validationErrors);
+      }
+
+      // message.error('Erro ao tentar registrar o usuário');
     }
   }
 
+  const initialData = {
+    birthdate: new Date()
+  };
+
   return (
-    <StyledRegisterForm ref={formRef} onSubmit={handleSubmit}>
+    <StyledRegisterForm
+      initialData={initialData}
+      ref={formRef}
+      onSubmit={handleSubmit}
+    >
       <InputWrapper>
         <RegisterInput name="name" placeholder="Insert your name" />
         <RegisterInput name="email" placeholder="Insert your email" />

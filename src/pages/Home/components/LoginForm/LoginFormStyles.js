@@ -10,6 +10,10 @@ export const StyledLoginForm = styled(Form)`
   height: 50%;
   width: 95%;
   justify-content: space-between;
+
+  span {
+    color: red;
+  }
 `;
 
 export const StyledLoginButton = styled.button`

@@ -10,10 +10,19 @@ import { Form } from '@unform/web';
 import TextArea from '~/components/Unform/TextArea/TextArea';
 
 // Styled components imports
-import { StyledFileUploader } from './UpdatePostModalStyles';
+import {
+  StyledFileUploader,
+  StyledUpdateButton,
+  StyledDeleteButton
+} from './UpdatePostModalStyles';
 
 // Icons imports
-import { PictureOutlined, PlaySquareOutlined } from '@ant-design/icons';
+import {
+  PictureOutlined,
+  PlaySquareOutlined,
+  DeliveredProcedureOutlined,
+  DeleteOutlined
+} from '@ant-design/icons';
 
 // Service import
 import PostService from '~/services/api/Post';
@@ -28,6 +37,7 @@ function UpdatePostModal({
   post_id
 }) {
   async function handleSubmit(data) {
+    console.log('Deu sub');
     try {
       let formData = new FormData();
 
@@ -46,6 +56,14 @@ function UpdatePostModal({
 
       // Emit websocket message
       // newPost(data, socket);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function handleDelete() {
+    try {
+      const response = await PostService.delete(post_id);
     } catch (error) {
       console.log(error);
     }
@@ -74,19 +92,7 @@ function UpdatePostModal({
         title={title}
         onOk={handleOk}
         onCancel={handleCancel}
-        footer={[
-          <Button key="back" onClick={handleCancel}>
-            Return
-          </Button>,
-          <Button
-            key="submit"
-            type="primary"
-            loading={loading}
-            onClick={handleOk}
-          >
-            Submit
-          </Button>
-        ]}
+        footer={null}
       >
         <Form
           name="updatePost"
@@ -105,8 +111,19 @@ function UpdatePostModal({
             name="url_video"
           />
 
-          <button type="submit">Atualizar</button>
+          <StyledUpdateButton
+            style={{ display: 'flex', margin: '0 auto' }}
+            type="submit"
+          >
+            <DeliveredProcedureOutlined style={{ paddingTop: '0.7vh' }} />
+            Atualizar
+          </StyledUpdateButton>
         </Form>
+
+        <StyledDeleteButton onClick={handleDelete}>
+          <DeleteOutlined style={{ paddingTop: '0.7vh' }} />
+          Deletar
+        </StyledDeleteButton>
       </Modal>
     </>
   );
