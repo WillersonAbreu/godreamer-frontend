@@ -49,12 +49,6 @@ export default function LoginForm() {
 
       const response = await AuthService.login(data);
 
-      // if (!response.token) {
-      //   console.log('Error', response);
-      //   dispatch(AuthActions.authFail());
-      //   message.error('Falha ao realizar login!');
-      // }
-
       if (response.token) {
         saveToken(response.token);
         dispatch(AuthActions.authSuccess(response.token));
@@ -69,10 +63,11 @@ export default function LoginForm() {
           validationErrors[error.path] = error.message;
         });
         formRef.current.setErrors(validationErrors);
+      } else {
+        message.error('Falha ao realizar login!');
       }
 
       dispatch(AuthActions.authFail());
-      message.error('Falha ao realizar login!');
     }
   }
 

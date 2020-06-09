@@ -56,9 +56,9 @@ export default function RegisterForm() {
         });
 
         // formRef.current.setErrors(validationErrors);
+      } else {
+        message.error('Erro ao tentar registrar o usuário');
       }
-
-      // message.error('Erro ao tentar registrar o usuário');
     }
   }
 
