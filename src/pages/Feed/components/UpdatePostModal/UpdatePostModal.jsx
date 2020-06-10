@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Ant design imports
-import { Modal } from 'antd';
+import { Modal, message } from 'antd';
 
 // Unform imports
 import { Form } from '@unform/web';
@@ -34,38 +34,64 @@ function UpdatePostModal({
   setLoading,
   setVisible,
   str_post,
-  post_id
+  post_id,
+  getPosts
 }) {
   async function handleSubmit(data) {
-    console.log('Deu sub');
+    const imageTypes = [];
+    imageTypes['image/png'] = true;
+    imageTypes['image/jpeg'] = true;
+    imageTypes['image/jpg'] = true;
+    imageTypes['image/gif'] = true;
+
+    const videoTypes = [];
+    videoTypes['video/mp4'] = true;
+
     try {
       let formData = new FormData();
 
       formData.append('str_post', data.str_post);
 
       if (data.url_image !== undefined) {
+        if (!imageTypes[data.url_image.type]) {
+          message.error(
+            'Arquivo de imagem deve ser dos tipos png, jpeg, jpg ou gif'
+          );
+          return null;
+        }
+
         formData.append('url_image', data.url_image);
       }
 
       if (data.url_video !== undefined) {
-        formData.append('url_video', data.url_video);
+        if (!videoTypes[data.url_video.type]) {
+          message.error('Arquivo de vídeo deve ser do tipo mp4');
+          return null;
+        } else {
+          formData.append('url_video', data.url_video);
+        }
       }
 
       // Making http request to the backend
-      const response = await PostService.update(formData, post_id);
-
-      // Emit websocket message
-      // newPost(data, socket);
+      await PostService.update(formData, post_id);
+      await getPosts();
+      message.success('Post atualizado com sucesso!');
     } catch (error) {
-      console.log(error);
+      message.error('Erro ao atualizar o post!');
+      setVisible(false);
     }
   }
 
   async function handleDelete() {
     try {
-      const response = await PostService.delete(post_id);
+      await PostService.delete(post_id);
+      await getPosts();
+      message.success('Post deletado com sucesso!');
+      setVisible(false);
     } catch (error) {
       console.log(error);
+      message.error('Erro ao deletar o post!');
+      setVisible(false);
     }
   }
 

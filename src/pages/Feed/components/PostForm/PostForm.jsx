@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 // Ant design import
 import { PictureOutlined, PlaySquareOutlined } from '@ant-design/icons';
@@ -24,24 +24,49 @@ import FileUpload from '~/components/Unform/FileInput/FileInput';
 // Yup imports
 import * as Yup from 'yup';
 
-// Socket IO Imports
-// import io from 'socket.io-client';
+// Ant design imports
+import { message } from 'antd';
 
-// Url import
-// import { GLOBAL_URL } from '~/global/shared/config';
-
-// Imports
-// import { newPost } from '~/services/socket/Post';
-
-function PostForm() {
-  // const socket = io(GLOBAL_URL);
+function PostForm({ getPosts }) {
+  const formRef = useRef(null);
 
   const userId = useSelector(state => state.user.id);
 
-  const validation = Yup.object().shape({});
-
   async function handleSubmit(data) {
+    const strPostSchema = Yup.object().shape({
+      error: Yup.string().required(
+        'É necessário inserir um texto ou uma imagem ou um vídeo ao menos'
+      )
+    });
+
+    const imageTypes = [];
+    imageTypes['image/png'] = true;
+    imageTypes['image/jpeg'] = true;
+    imageTypes['image/jpg'] = true;
+    imageTypes['image/gif'] = true;
+
+    const videoTypes = [];
+    videoTypes['video/mp4'] = true;
+
     try {
+      if (!data.url_image && !data.url_video && !data.str_post) {
+        await strPostSchema.validate(data, {
+          abortEarly: false
+        });
+      } else if (!data.str_post && data.url_image && !data.url_video) {
+        if (!imageTypes[data.url_image.type]) {
+          message.error(
+            'Arquivo de imagem deve ser dos tipos png, jpeg, jpg ou gif'
+          );
+          return null;
+        }
+      } else if (!data.str_post && !data.url_image && data.url_video) {
+        if (!videoTypes[data.url_video.type]) {
+          message.error('Arquivo de vídeo deve ser do tipo mp4');
+          return null;
+        }
+      }
+
       let formData = new FormData();
       formData.append('user_id', userId);
       formData.append('str_post', data.str_post);
@@ -49,18 +74,25 @@ function PostForm() {
       formData.append('url_video', data.url_video);
 
       // Making http request to the backend
-      const response = await PostService.create(formData);
-
-      // Emit websocket message
-      // newPost(data, socket);
+      await PostService.create(formData);
+      message.success('Você registrou um novo post!');
+      await getPosts();
     } catch (error) {
-      console.log(error);
+      // Showing validation errors on
+      const validationErrors = {};
+      if (error instanceof Yup.ValidationError) {
+        error.inner.forEach(error => {
+          validationErrors[error.path] = error.message;
+
+          message.error(error.message);
+        });
+      }
     }
   }
 
   return (
     <Container>
-      <StyledForm onSubmit={handleSubmit}>
+      <StyledForm ref={formRef} onSubmit={handleSubmit}>
         <StyledTextArea
           placeholder="Compartilhe aqui as suas melhores idéias hoje"
           name="str_post"

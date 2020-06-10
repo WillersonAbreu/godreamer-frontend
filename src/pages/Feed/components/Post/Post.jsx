@@ -25,7 +25,15 @@ import { UrlFinder } from '~/helpers/FeedHelper';
 // Redux imports
 import { useSelector } from 'react-redux';
 
-function Post({ id, str_post, url_image, url_video, createdAt, User }) {
+function Post({
+  id,
+  str_post,
+  url_image,
+  url_video,
+  createdAt,
+  User,
+  getPosts
+}) {
   const loggedUserId = useSelector(state => state.user.id);
 
   const [loading, setLoading] = useState(false);
@@ -120,6 +128,7 @@ function Post({ id, str_post, url_image, url_video, createdAt, User }) {
         url_image={url_image}
         url_video={url_video}
         post_id={id}
+        getPosts={getPosts}
       />
     </Container>
   );

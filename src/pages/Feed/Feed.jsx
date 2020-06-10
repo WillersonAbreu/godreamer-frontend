@@ -78,7 +78,7 @@ export default function Feed() {
   return (
     <NetworkContentLayout>
       <Container>
-        <PostForm />
+        <PostForm getPosts={fetchPosts} />
         {postList &&
           postList.map(post => (
             <Post
@@ -89,6 +89,7 @@ export default function Feed() {
               url_video={post.url_video}
               createdAt={post.createdAt}
               User={post.User}
+              getPosts={fetchPosts}
             ></Post>
           ))}
       </Container>

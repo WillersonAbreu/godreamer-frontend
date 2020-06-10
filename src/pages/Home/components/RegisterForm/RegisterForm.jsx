@@ -43,7 +43,7 @@ export default function RegisterForm() {
         abortEarly: false
       });
 
-      const response = await UserService.create(data);
+      await UserService.create(data);
       message.success('Usuário registrado com sucesso!');
     } catch (error) {
       // Showing validation errors on
@@ -54,8 +54,6 @@ export default function RegisterForm() {
 
           message.error(error.message);
         });
-
-        // formRef.current.setErrors(validationErrors);
       } else {
         message.error('Erro ao tentar registrar o usuário');
       }
