@@ -7,6 +7,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 // Components imports
 import Home from '~/pages/Home/Home';
 import Feed from '~/pages/Feed/Feed';
+import Profile from '~/pages/Profile/Profile';
+
 
 // Custom layout import
 import CustomLayout from '~/components/CustomLayout/CustomLayout';
@@ -51,6 +53,8 @@ export default function Routes() {
           <Route exact path="/" component={Home} />
 
           <PrivateRoute isSigned={checkAuth()} path="/feed" component={Feed} />
+          <PrivateRoute isSigned={checkAuth()} exact path="/profile" component={Profile} />
+
         </CustomLayout>
       </Switch>
     </Router>
