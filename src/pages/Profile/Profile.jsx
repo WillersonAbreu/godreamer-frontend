@@ -69,13 +69,14 @@ export default function Profile() {
 
       <Roww>
       
-      <ColumnDesc span={24}>
-      <InfoDesc>Sobre o usuário</InfoDesc>
-      <InfoAnswers1>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pellentesque, diam nec malesuada tincidunt, tellus ex varius libero, sit amet viverra lectus turpis et arcu. Sed rhoncus ex id nisi sollicitudin, et eleifend eros aliquet. Duis euismod in lectus vel facilisis. Vestibulum eleifend at purus ac iaculis. Donec ultricies lorem id tincidunt tincidunt. Sed at interdum tortor, id sodales metus. Vestibulum scelerisque sapien eu magna bibendum pellentesque. Pellentesque ornare purus eget ex placerat pretium. In pharetra vehicula torto.</InfoAnswers1>
-      </ColumnDesc>
-      <Buttonn1 type="primary"  shape="round" size="large" icon={<ArrowLeftOutlined />}>
-        Voltar
-      </Buttonn1>
+        <ColumnDesc span={24}>
+          <InfoDesc>Sobre o usuário</InfoDesc>
+          <InfoAnswers1>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pellentesque, diam nec malesuada tincidunt, tellus ex varius libero, sit amet viverra lectus turpis et arcu. Sed rhoncus ex id nisi sollicitudin, et eleifend eros aliquet. Duis euismod in lectus vel facilisis. Vestibulum eleifend at purus ac iaculis. Donec ultricies lorem id tincidunt tincidunt. Sed at interdum tortor, id sodales metus. Vestibulum scelerisque sapien eu magna bibendum pellentesque. Pellentesque ornare purus eget ex placerat pretium. In pharetra vehicula torto.</InfoAnswers1>
+        </ColumnDesc>
+        <Buttonn1 type="primary"  shape="round" size="large" icon={<ArrowLeftOutlined />}>
+          Voltar
+        </Buttonn1>
+      
       </Roww>
     </Container>
   
