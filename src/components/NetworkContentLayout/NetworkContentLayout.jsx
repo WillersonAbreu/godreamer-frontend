@@ -8,11 +8,13 @@ import {
   ChatSection
 } from './NetworkContentLayoutStyles';
 
+import Groups from './components/Groups/Groups';
+
 export default function NetworkContentLayout(props) {
   return (
     <Container>
       <GroupsSection>
-        <h1>Groups</h1>
+        <Groups></Groups>
       </GroupsSection>
       <FeedSection>{props.children}</FeedSection>
       <ChatSection>

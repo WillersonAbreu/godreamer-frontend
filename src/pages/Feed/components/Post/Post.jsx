@@ -39,7 +39,7 @@ function Post({
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
 
-  const { id: userId, name: userName, ProfileImage } = User;
+  const { id: userId, name: userName, ProfileImage: profileImage } = User;
   let bodyUrl;
 
   if (str_post) {
@@ -75,19 +75,19 @@ function Post({
         {/**
          * Show profile image if it exists
          */}
-        {ProfileImage && (
+        {profileImage && (
           <StyledTooltip
             placement="right"
             title={`Clique para ver o perfil de ${userName}`}
           >
-            <StyledProfile size="large" src={ProfileImage} />
+            <StyledProfile size="large" src={profileImage} />
           </StyledTooltip>
         )}
 
         {/**
          * Show first letter of user name if profile image does not exists
          */}
-        {!ProfileImage && (
+        {!profileImage && (
           <StyledTooltip
             placement="right"
             title={`Clique para ver o perfil de ${userName}`}

@@ -95,15 +95,7 @@ function UpdatePostModal({
     }
   }
 
-  function handleOk() {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setVisible(false);
-    }, 3000);
-  }
-
-  function handleCancel() {
+  function handleClose() {
     setVisible(false);
   }
 
@@ -116,9 +108,8 @@ function UpdatePostModal({
       <Modal
         visible={visible}
         title={title}
-        onOk={handleOk}
-        onCancel={handleCancel}
         footer={null}
+        onCancel={handleClose}
       >
         <Form
           name="updatePost"

@@ -12,9 +12,9 @@ export const Container = styled.div`
 export const GroupsSection = styled.div`
   display: flex;
   flex-direction: column;
-  width: 15%;
+  width: 21%;
   min-height: 100%;
-  /* border-right: 1px solid black; */
+  border-right: 0.5px solid #ccc;
   position: fixed;
   left: 0;
 `;

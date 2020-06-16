@@ -10,9 +10,6 @@ import Post from './components/Post/Post';
 import FeedService from '~/services/api/Feed';
 import { useSelector } from 'react-redux';
 
-// Socket IO Imports
-// import io from 'socket.io-client';
-
 // Url import
 import { GLOBAL_URL } from '~/global/shared/config';
 
@@ -23,17 +20,6 @@ export default function Feed() {
 
   useEffect(() => {
     fetchPosts();
-
-    // const socket = io(GLOBAL_URL);
-
-    // socket.on('disconnect', () => {
-    //   console.log('desconectando');
-    //   socket.disconnect();
-    // });
-
-    // socket.on('receivedNewPost', async newPost => {
-    //   setRefresh(!refresh);
-    // });
   }, [refresh]);
 
   async function fetchPosts() {
