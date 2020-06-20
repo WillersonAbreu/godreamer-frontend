@@ -16,7 +16,7 @@ import {
   PostOptionsIcon
 } from './GroupPostStyles';
 import StyledOpenGraphComponent from '~/components/MetatagsBox/MetatagsBox';
-
+import Modal from '../UpdatePostModal/UpdatePostModal';
 
 // Helpers import
 import { GetPostDay } from '~/helpers/DateFormatterHelper';
@@ -25,107 +25,124 @@ import { UrlFinder } from '~/helpers/FeedHelper';
 // Redux imports
 import { useSelector } from 'react-redux';
 
-function GroupPost({ id, str_post, url_image, url_video, createdAt, User }) {
-//   const loggedUserId = useSelector(state => state.user.id);
+function GroupPost({
+  id,
+  str_post,
+  url_image,
+  url_video,
+  createdAt,
+  User,
+  getPosts,
+  groupId
+}) {
+  const loggedUserId = useSelector(state => state.user.id);
 
-//   const [loading, setLoading] = useState(false);
-//   const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [visible, setVisible] = useState(false);
 
-//   const { id: userId, name: userName, ProfileImage } = User;
-//   let bodyUrl;
+  const { id: userId, name: userName, ProfileImage: profileImage } = User;
 
-//   if (str_post) {
-//     var regexResponse = UrlFinder(str_post);
+  let bodyUrl;
 
-//     if (regexResponse) {
-//       str_post = regexResponse[0];
-//       bodyUrl = regexResponse[1];
-//     }
-//   }
+  if (str_post) {
+    var regexResponse = UrlFinder(str_post);
 
-//   const BodyContent = ({ url_video, url_image }) => {
-//     if (url_image !== null && url_video === null) {
-//       return <ImageContainer src={url_image} />;
-//     } else if (url_video !== null) {
-//       return (
-//         <VideoContainer controls>
-//           <source src={url_video} type="video/mp4" />
-//         </VideoContainer>
-//       );
-//     } else {
-//       return null;
-//     }
-//   };
+    if (regexResponse) {
+      str_post = regexResponse[0];
+      bodyUrl = regexResponse[1];
+    }
+  }
 
-//   function showModal() {
-//     setVisible(true);
-//   }
+  const BodyContent = ({ url_video, url_image }) => {
+    if (url_image !== null && url_video === null) {
+      return (
+        <ImageContainer
+          src={`http://localhost:3333/static/post/${url_image}`}
+        />
+      );
+    } else if (url_video !== null) {
+      return (
+        <VideoContainer controls>
+          <source
+            src={`http://localhost:3333/static/post/${url_video}`}
+            type="video/mp4"
+          />
+        </VideoContainer>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  function showModal() {
+    setVisible(true);
+  }
 
   return (
-    <Container 
-    // key={id}
-    >
+    <Container key={id}>
       <PostHeader>
         {/**
          * Show profile image if it exists
          */}
-        {/* {ProfileImage && ( */}
+        {profileImage.image_source && (
           <StyledTooltip
             placement="right"
             title={`Clique para ver o perfil de
-             aaa`}
+             ${userName}`}
           >
-            <StyledProfile size="large" 
-            // src={ProfileImage}
-             />
+            <StyledProfile
+              size="large"
+              src={`http://localhost:3333/static/profile/${profileImage.image_source}`}
+            />
           </StyledTooltip>
-        {/* )} */}
+        )}
 
         {/**
          * Show first letter of user name if profile image does not exists
          */}
-        {/* {!ProfileImage && (
+        {!profileImage && (
           <StyledTooltip
             placement="right"
             title={`Clique para ver o perfil de ${userName}`}
           >
             <StyledProfile size="large">{userName[0]}</StyledProfile>
           </StyledTooltip>
-        )} */}
-
+        )}
         {/**
          * Show delete delete and update options if the post is from logged user
          */}
-        {/* {loggedUserId === userId && ( */}
-          <PostOptionsIconContainer 
-            // onClick={() => showModal()}
-            >
+        {loggedUserId === userId && (
+          <PostOptionsIconContainer onClick={() => showModal()}>
             <StyledTooltip placement="top" title="Gerenciar este post">
               <PostOptionsIcon />
             </StyledTooltip>
           </PostOptionsIconContainer>
-        {/* )} */}
+        )}
       </PostHeader>
       <PostBody>
-        {/* {str_post &&  */}
-        <PostText>
-          afadfad
-          {/* {str_post} */}
-        </PostText>
-        {/* {bodyUrl &&  */}
-        {/* <StyledOpenGraphComponent 
-        // url={bodyUrl} 
-        /> */}
-        {/* <BodyContent 
-        url_image={url_image} url_video={url_video} 
-        /> */}
+        {str_post && <PostText>{str_post}</PostText>}
+        {bodyUrl && <StyledOpenGraphComponent url={bodyUrl} />}
+        <BodyContent url_image={url_image} url_video={url_video} />
       </PostBody>
       <PostFooter>
         <StyledDateContainer>
-          {/* {createdAt && GetPostDay(createdAt)} */}
+          {createdAt && GetPostDay(createdAt)}
         </StyledDateContainer>
       </PostFooter>
 
+      <Modal
+        title="Gerenciar Post"
+        loading={loading}
+        visible={visible}
+        setLoading={setLoading}
+        setVisible={setVisible}
+        str_post={str_post}
+        url_image={url_image}
+        url_video={url_video}
+        post_id={id}
+        getPosts={getPosts}
+        groupId={groupId}
+      />
     </Container>
   );
 }

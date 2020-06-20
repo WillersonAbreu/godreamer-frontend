@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
+// History
+import { useHistory } from 'react-router-dom';
+
 // Redux imports
 import { useSelector } from 'react-redux';
 
@@ -29,6 +32,8 @@ function Groups() {
   const [followedGroupList, setFollowedGroupList] = useState([]);
   const userType = useSelector(state => state.user.user_type);
   const userId = useSelector(state => state.user.id);
+
+  const history = useHistory();
 
   useEffect(() => {
     fetchOwnGroups();
@@ -81,7 +86,7 @@ function Groups() {
               groupList.map(group => (
                 <GroupItem
                   key={group.id + group.group_name}
-                  onClick={() => console.log(group)}
+                  onClick={() => history.push(`/group/${group.id}`)}
                 >
                   {/* <Tooltip title="Clique para ir ao grupo">
                     <StyledGroupImage>
@@ -112,7 +117,7 @@ function Groups() {
           followedGroupList.map(group => (
             <GroupItem
               key={group.id + group.group_name}
-              onClick={() => console.log(group)}
+              onClick={() => history.push(`/group/${group.Group.id}`)}
             >
               <span key> {group.Group.group_name} </span>
             </GroupItem>

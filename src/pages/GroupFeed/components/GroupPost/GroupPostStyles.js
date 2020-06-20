@@ -13,10 +13,8 @@ const { Paragraph } = Typography;
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 49px;
-  position: relative;
-  top: -60px;
-  width: 52.5%;
+  width: 90%;
+  margin: 2vh auto;
   border-radius: 5px;
   justify-content: center;
   font-size: 13px;
@@ -80,7 +78,7 @@ export const ImageContainer = styled.img`
 export const StyledProfile = styled(Avatar)`
   display: flex;
   border: 0.5px solid #ccc;
-  margin: 1vw 1vw;
+  margin: 1.5vw 1vw;
 
   &:hover {
     cursor: pointer;

@@ -9,25 +9,11 @@ import { GLOBAL_URL } from '~/global/shared/config';
 import store from '~/store';
 const { token } = store.getState().auth;
 
-export default class GroupService {
-  static async index() {
-    try {
-      const response = await axios.get('/groups', AxiosConfig.config);
-      return response.data;
-    } catch (error) {
-      return error;
-    }
-  }
-
-  static async getGroupByName() {
-    try {
-    } catch (error) {}
-  }
-
-  static async getGroupById(groupId) {
+export default class DonationService {
+  static async index(groupOwnerId) {
     try {
       const response = await axios.get(
-        `/groups/by-id/${groupId}`,
+        `/donation/info/${groupOwnerId}`,
         AxiosConfig.config
       );
       return response.data;
@@ -36,10 +22,11 @@ export default class GroupService {
     }
   }
 
-  static async myGroups(userId) {
+  static async create(data, groupId) {
     try {
-      const response = await axios.get(
-        `/feed/own/groups/${userId}`,
+      const response = await axios.post(
+        `/donation/info/${groupId}`,
+        data,
         AxiosConfig.config
       );
       return response.data;
@@ -48,28 +35,10 @@ export default class GroupService {
     }
   }
 
-  static async followedGroups(userId) {
-    try {
-      const response = await axios.get(`/followed-groups`, AxiosConfig.config);
-      return response.data;
-    } catch (error) {
-      return error;
-    }
-  }
-
-  static async create(data) {
-    try {
-      const response = await axios.post('/groups', data, AxiosConfig.config);
-      return response.data;
-    } catch (error) {
-      return error;
-    }
-  }
-
-  static async update(data, postId) {
+  static async update(data, groupId, postId) {
     try {
       const response = await axios.put(
-        `/groups/${postId}`,
+        `/donation/info/${groupId}/${postId}`,
         data,
         AxiosConfig.changeConfig({
           baseURL: GLOBAL_URL,
@@ -90,10 +59,10 @@ export default class GroupService {
     }
   }
 
-  static async delete(postId) {
+  static async delete(postId, groupId) {
     try {
       const response = await axios.delete(
-        `/groups/${postId}`,
+        `/donation/info/${groupId}/${postId}`,
         AxiosConfig.config
       );
       return response.data;

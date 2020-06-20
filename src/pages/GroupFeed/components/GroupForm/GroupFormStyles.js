@@ -2,22 +2,17 @@ import styled from 'styled-components';
 import TextArea from '~/components/Unform/TextArea/TextArea';
 import { Form } from '@unform/web';
 
-export const Container1 = styled.div`
+export const Container = styled.div`
   display: flex;
-  margin-left: 7.5vh;
-  margin-right: 3vh;
-  margin-bottom: 3vh;
-  margin-top: 3.5vh;
-  height: 50%;
+  margin: 1.5vh auto;
+  height: 20%;
   width: 90%;
-  /* border: 0.5px solid #1f804f; */
   border-radius: 5px;
   justify-content: center;
   -webkit-box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
   -moz-box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
   box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
 `;
-
 
 export const StyledForm = styled(Form)`
   display: flex;
@@ -45,7 +40,7 @@ export const RightFormContent = styled.div`
   height: 15vh;
   width: 30%;
   margin: 1vh 1vw;
-`;  
+`;
 
 export const StyledButton = styled.button`
   color: white;
