@@ -22,6 +22,17 @@ export const InfoContainer = styled.div`
   position: fixed;
 `;
 
+export const RightInforContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  right: 0;
+  width: 20%;
+  height: 100%;
+  border-right: 0.5px solid #ccc;
+
+  position: fixed;
+`;
+
 export const FeedSection = styled.main`
   display: flex;
   flex-direction: column;

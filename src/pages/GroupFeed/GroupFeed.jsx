@@ -24,6 +24,7 @@ import GroupPostService from '~/services/api/GroupPost';
 import {
   Container,
   InfoContainer,
+  RightInforContainer,
   FeedSection,
   FeedContainer,
   PostListContainer,
@@ -122,13 +123,14 @@ export default function GroupFeed() {
             ))}
         </FeedContainer>
       </FeedSection>
-      {/* 
-      <StyledRow>
-        <ColumnInfo span={5}>
-          <InfoTitle>Informações</InfoTitle>
-          <InfoParagraph>{groupData && groupData.group_desc}</InfoParagraph>
-        </ColumnInfo>
-      </StyledRow> */}
+      <RightInforContainer>
+        <StyledRow>
+          <ColumnInfo span={5}>
+            <InfoTitle>Informações</InfoTitle>
+            <InfoParagraph>{groupData && groupData.group_desc}</InfoParagraph>
+          </ColumnInfo>
+        </StyledRow>
+      </RightInforContainer>
 
       {groupData && (
         <DonationModal
