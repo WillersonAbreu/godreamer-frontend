@@ -84,7 +84,7 @@ function GroupPost({
         {/**
          * Show profile image if it exists
          */}
-        {profileImage.image_source && (
+        {profileImage !== null && profileImage.image_source && (
           <StyledTooltip
             placement="right"
             title={`Clique para ver o perfil de
