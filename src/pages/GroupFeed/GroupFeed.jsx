@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 
 // React router dom imports
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 import GroupForm from './components/GroupForm/GroupForm';
 import GroupPost from './components/GroupPost/GroupPost';
@@ -39,13 +39,18 @@ import {
   InfoParagraph,
   InfoTitle
 } from './GroupFeedStyles';
+
+import UserService from '~/services/api/User';
 import DonationService from '~/services/api/InfoDonation';
 
 export default function GroupFeed() {
   const [groupData, setGroupData] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [postsList, setPostslist] = useState(null);
+  const [groupOwnerImage, setGroupOwnerImage] = useState(null);
   const { groupId } = useParams();
+
+  const history = useHistory();
 
   useEffect(() => {
     fetchGroupData();
@@ -64,15 +69,37 @@ export default function GroupFeed() {
   async function fetchGroupData() {
     try {
       const response = await GroupService.getGroupById(groupId);
-      // console.log(response[0]);
+      console.log(response[0]);
       setGroupData(response[0]);
+      fetchOwnerData(response[0].user_id);
     } catch (error) {
       console.log(error);
     }
   }
+
+  async function fetchOwnerData(userId) {
+    try {
+      const image = await UserService.getProfileImage(userId);
+      if (image.image_source) {
+        setGroupOwnerImage(image.image_source);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <Container>
       <InfoContainer>
+        <StyledButton
+          type="primary"
+          shape="round"
+          size="large"
+          icon={<ArrowLeftOutlined />}
+          onClick={() => history.goBack()}
+        >
+          Voltar
+        </StyledButton>
         <ColumnGroup>
           <GroupAvatar
             src={
@@ -89,7 +116,11 @@ export default function GroupFeed() {
 
         <ColumnGroup style={{ width: '80%' }}>
           <InfoAnswers>Criador</InfoAnswers>
-          <ProfileAvatar size={90} icon={<UserOutlined />} />
+          <ProfileAvatar
+            size={90}
+            src={`http://localhost:3333/static/profile/${groupOwnerImage &&
+              groupOwnerImage}`}
+          />
           <h3>{groupData.User && groupData.User.name}</h3>
 
           <StyledButton
@@ -123,6 +154,7 @@ export default function GroupFeed() {
             ))}
         </FeedContainer>
       </FeedSection>
+
       <RightInforContainer>
         <StyledRow>
           <ColumnInfo span={5}>

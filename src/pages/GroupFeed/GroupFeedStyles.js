@@ -64,17 +64,17 @@ export const PostListContainer = styled.div`
   box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
 `;
 
-export const StyledRow = styled(Row)`
+export const StyledRow = styled.div`
   display: flex;
   flex-direction: row;
-  width: 100%;
+  width: 90%;
   height: 100%;
   flex: 0;
 `;
 
 export const ColumnGroup = styled(Col)`
   text-align: center;
-  margin: 2vh auto;
+  margin: 0.5vh auto;
   max-width: 80%;
   -webkit-box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
   -moz-box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
@@ -84,11 +84,9 @@ export const ColumnGroup = styled(Col)`
   text-align: center;
 `;
 
-export const ColumnInfo = styled(Col)`
+export const ColumnInfo = styled.div`
   text-align: center;
-  position: relative;
-  margin-top: 3vh;
-  margin-left: 3vh;
+  margin: 3vh auto;
   -webkit-box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
   -moz-box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
   box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
