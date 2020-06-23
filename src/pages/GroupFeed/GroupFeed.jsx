@@ -16,9 +16,12 @@ import {
   PayCircleOutlined
 } from '@ant-design/icons';
 
+import { useSelector } from 'react-redux';
+
 // Service import
 import GroupService from '~/services/api/Group';
 import GroupPostService from '~/services/api/GroupPost';
+import FollowGroupService from '~/services/api/FollowGroup';
 
 // Styles imports
 import {
@@ -42,19 +45,24 @@ import {
 
 import UserService from '~/services/api/User';
 import DonationService from '~/services/api/InfoDonation';
+import { message } from 'antd';
 
 export default function GroupFeed() {
   const [groupData, setGroupData] = useState({});
   const [isOpen, setIsOpen] = useState(false);
+  const [isFollowed, setIsFollowed] = useState(false);
   const [postsList, setPostslist] = useState(null);
   const [groupOwnerImage, setGroupOwnerImage] = useState(null);
   const { groupId } = useParams();
+  const loggedUserId = useSelector(state => state.user.id);
+  const [isOwner, setIsOwner] = useState(false);
 
   const history = useHistory();
 
   useEffect(() => {
     fetchGroupData();
     fetchGroupPosts();
+    fetchFollowedGroups();
   }, [groupId]);
 
   async function fetchGroupPosts() {
@@ -69,8 +77,8 @@ export default function GroupFeed() {
   async function fetchGroupData() {
     try {
       const response = await GroupService.getGroupById(groupId);
-      console.log(response[0]);
       setGroupData(response[0]);
+      setIsOwner(response[0].user_id === loggedUserId);
       fetchOwnerData(response[0].user_id);
     } catch (error) {
       console.log(error);
@@ -80,9 +88,47 @@ export default function GroupFeed() {
   async function fetchOwnerData(userId) {
     try {
       const image = await UserService.getProfileImage(userId);
-      if (image.image_source) {
-        setGroupOwnerImage(image.image_source);
+      if (image) {
+        if (image.image_source) {
+          setGroupOwnerImage(image.image_source);
+        }
       }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function fetchFollowedGroups() {
+    try {
+      const { followedGroups } = await FollowGroupService.followedGroups();
+
+      followedGroups.map(group => {
+        if (group.group_id == groupId) {
+          setIsFollowed(true);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function followGroup(groupId) {
+    try {
+      await FollowGroupService.create({ group_id: groupId });
+      await fetchFollowedGroups();
+      message.success('Você está seguindo o grupo agora');
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function unfollowGroup(groupId) {
+    try {
+      const response = await FollowGroupService.delete(groupId);
+      console.log(response);
+      setIsFollowed(false);
+      await fetchFollowedGroups();
+      message.success('Você deixou de seguir o grupo');
     } catch (error) {
       console.log(error);
     }
@@ -156,6 +202,33 @@ export default function GroupFeed() {
       </FeedSection>
 
       <RightInforContainer>
+        {!isOwner && (
+          <StyledRow>
+            {!isFollowed && (
+              <StyledButton
+                type="primary"
+                shape="round"
+                size="large"
+                // icon={<PayCircleOutlined />}
+                onClick={async () => await followGroup(groupId)}
+              >
+                Participar do grupo
+              </StyledButton>
+            )}
+            {isFollowed && (
+              <StyledButton
+                type="primary"
+                shape="round"
+                size="large"
+                // icon={<PayCircleOutlined />}
+                onClick={async () => await unfollowGroup(groupId)}
+              >
+                Deixar o grupo
+              </StyledButton>
+            )}
+          </StyledRow>
+        )}
+
         <StyledRow>
           <ColumnInfo span={5}>
             <InfoTitle>Informações</InfoTitle>

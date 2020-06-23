@@ -8,7 +8,7 @@ export const { Types, Creators } = createActions({
 });
 
 const INITIAL_STATE = {
-  token: localStorage.getItem('token') || null,
+  token: null,
   loading: false
 };
 
