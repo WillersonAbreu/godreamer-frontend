@@ -1,8 +1,6 @@
 // Styled components imports
 import styled from 'styled-components';
 
-import { Avatar } from 'antd';
-
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -60,13 +58,3 @@ export const GroupItem = styled.a`
   }
 `;
 
-export const StyledGroupImage = styled(Avatar)`
-  display: flex;
-  border: 0.5px solid #ccc;
-  margin: 1vw auto;
-
-  &:hover {
-    cursor: pointer;
-    opacity: 0.7;
-  }
-`;

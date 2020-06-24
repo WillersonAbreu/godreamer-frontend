@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Ant design imports
-import { Modal, message } from 'antd';
+import { Modal } from 'antd';
 
 function UpdatePostModal({ title, visible, setVisible, donationInfo }) {
   function handleClose() {

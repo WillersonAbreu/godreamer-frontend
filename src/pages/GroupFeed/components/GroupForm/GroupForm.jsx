@@ -1,5 +1,5 @@
 // React import
-import React, { useRef } from 'react';
+import React from 'react';
 
 // Redux imports
 import { useSelector } from 'react-redux';
@@ -26,8 +26,6 @@ import {
 } from './GroupFormStyles';
 
 export default function GroupForm({ getPosts, groupId }) {
-  const formRef = useRef(null);
-
   const userId = useSelector(state => state.user.id);
 
   async function handleSubmit(data) {

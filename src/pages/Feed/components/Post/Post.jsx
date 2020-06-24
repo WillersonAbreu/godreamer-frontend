@@ -24,6 +24,7 @@ import { UrlFinder } from '~/helpers/FeedHelper';
 
 // Redux imports
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 function Post({
   id,
@@ -35,7 +36,7 @@ function Post({
   getPosts
 }) {
   const loggedUserId = useSelector(state => state.user.id);
-
+  const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
 
@@ -79,6 +80,7 @@ function Post({
           <StyledTooltip
             placement="right"
             title={`Clique para ver o perfil de ${userName}`}
+            onClick={() => history.push(`/profile/${userName}`)}
           >
             <StyledProfile size="large" src={profileImage} />
           </StyledTooltip>
@@ -91,6 +93,7 @@ function Post({
           <StyledTooltip
             placement="right"
             title={`Clique para ver o perfil de ${userName}`}
+            onClick={() => history.push(`/profile/${userName}`)}
           >
             <StyledProfile size="large">{userName[0]}</StyledProfile>
           </StyledTooltip>

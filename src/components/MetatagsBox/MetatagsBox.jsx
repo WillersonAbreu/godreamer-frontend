@@ -18,14 +18,14 @@ function MetatagsBox({ url }) {
 
   useEffect(() => {
     fetchMetas();
-  }, [reload]);
+  }, [reload, openGraphObject]);
 
   async function fetchMetas() {
     try {
       const response = await MetatagsService.find({ url: url });
 
       await setOpenGraphObject(response.metadata);
-    } catch (error) {}
+    } catch (error) { }
   }
 
   return openGraphObject ? (
@@ -51,13 +51,13 @@ function MetatagsBox({ url }) {
       </BodyContainer>
     </MetasBoxContainer>
   ) : (
-    <MetasBoxContainer>
-      <SpinContainer>
-        <StyledSpin size="large" />
-        <span>Carregando conteúdo...</span>
-      </SpinContainer>
-    </MetasBoxContainer>
-  );
+      <MetasBoxContainer>
+        <SpinContainer>
+          <StyledSpin size="large" />
+          <span>Carregando conteúdo...</span>
+        </SpinContainer>
+      </MetasBoxContainer>
+    );
 }
 
 export default MetatagsBox;

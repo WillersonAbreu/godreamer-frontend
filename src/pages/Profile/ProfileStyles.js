@@ -3,12 +3,21 @@ import styled from 'styled-components';
 
 import { Row, Col, Avatar, Button } from 'antd';
 
-import { UserOutlined } from '@ant-design/icons';
-
 export const Container = styled.div`
-display: absolute;
-width: 99%;
-height: 100%;
+  display: absolute;
+  width: 99%;
+  height: 100%;
+`;
+
+export const LeftContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  width: 20%;
+  height: 100%;
+  border-right: 0.5px solid #ccc;
+
+  position: fixed;
 `;
 
 export const ImageContainer = styled.div`
@@ -43,8 +52,10 @@ export const Roww = styled(Row)`
 `;
 
 export const Column = styled(Col)`
-  margin-top: 5vh;
-  margin-left: 5vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  text-align: center;
 `;
 
 export const ColumnDesc = styled(Col)`
@@ -67,18 +78,19 @@ export const ColumnOutros = styled(Col)`
 `;
 
 export const ColumnProfile = styled(Col)`
+  display: flex;
+  flex-direction: column;
   text-align: center;
-  margin-top: 5vh;
-  margin-left: 5vh;
+  margin: 5vh auto;
+  width: 94%;
   -webkit-box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
   -moz-box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
   box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
   border-radius: 10px;
 `;
 
-export const Ava = styled(Avatar)`
-  margin-top: 5vh;
-  margin-bottom: 5vh;
+export const StyledAvatar = styled(Avatar)`
+  margin: 0 auto;
 `;
 
 export const InfoFont = styled.h2`

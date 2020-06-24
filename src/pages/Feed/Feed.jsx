@@ -20,7 +20,7 @@ export default function Feed() {
 
   useEffect(() => {
     fetchPosts();
-  }, [refresh]);
+  }, [refresh, userId]);
 
   async function fetchPosts() {
     try {

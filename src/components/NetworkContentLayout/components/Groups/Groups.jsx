@@ -6,9 +6,6 @@ import { useHistory } from 'react-router-dom';
 // Redux imports
 import { useSelector } from 'react-redux';
 
-// Ant design imports
-import { Tooltip } from 'antd';
-
 // Styled componetns imports
 import {
   Container,
@@ -17,7 +14,6 @@ import {
   FollowedGroupsContainer,
   CreateGroupButton,
   GroupItem,
-  StyledGroupImage
 } from './GroupsStyles';
 
 // Components imports
@@ -82,6 +78,7 @@ function Groups() {
             >
               Meus grupos
             </label>
+            {!groupList.length && <span>Você não criou grupo algum</span>}
             {groupList &&
               groupList.map(group => (
                 <GroupItem
@@ -113,6 +110,7 @@ function Groups() {
         >
           Seguindo
         </label>
+        {!followedGroupList.length && <span>Você ainda não segue nenhum grupo</span>}
         {followedGroupList &&
           followedGroupList.map(group => (
             <GroupItem

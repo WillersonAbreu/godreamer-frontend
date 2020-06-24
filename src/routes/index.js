@@ -56,7 +56,7 @@ export default function Routes() {
           <PrivateRoute
             isSigned={checkAuth()}
             exact
-            path="/profile"
+            path="/profile/:userEmailOrEmail"
             component={Profile}
           />
           <PrivateRoute

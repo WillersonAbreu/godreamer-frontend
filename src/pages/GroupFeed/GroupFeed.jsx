@@ -11,8 +11,6 @@ import DonationModal from './components/GroupDonationModal/DonationModal';
 
 import {
   UserOutlined,
-  ArrowLeftOutlined,
-  TeamOutlined,
   PayCircleOutlined
 } from '@ant-design/icons';
 
@@ -26,19 +24,12 @@ import {
   InfoContainer,
   FeedSection,
   FeedContainer,
-  PostListContainer,
-  ReturnButton,
-  StyledRow,
   ColumnGroup,
   GroupAvatar,
   ProfileAvatar,
   InfoAnswers,
   StyledButton,
-  ColumnInfo,
-  InfoParagraph,
-  InfoTitle
 } from './GroupFeedStyles';
-import DonationService from '~/services/api/InfoDonation';
 
 export default function GroupFeed() {
   const [groupData, setGroupData] = useState({});
@@ -78,8 +69,8 @@ export default function GroupFeed() {
               groupData.group_image
                 ? `http://localhost:3333/static/group/${groupData.group_image}`
                 : groupData.group_name
-                ? groupData.group_name[0]
-                : ''
+                  ? groupData.group_name[0]
+                  : ''
             }
             size={120}
           />
