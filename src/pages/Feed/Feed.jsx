@@ -13,8 +13,6 @@ import { useSelector } from 'react-redux';
 // Url import
 import { GLOBAL_URL } from '~/global/shared/config';
 
-import AxiosConfig from '~/services/api/config/AxiosConfig';
-
 export default function Feed() {
   const userId = useSelector(state => state.user.id);
   const [postList, setPostList] = useState([]);
@@ -78,7 +76,7 @@ export default function Feed() {
               createdAt={post.createdAt}
               User={post.User}
               getPosts={fetchPosts}
-            ></Post>
+            />
           ))}
       </Container>
     </NetworkContentLayout>

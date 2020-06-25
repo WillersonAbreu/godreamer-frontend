@@ -14,7 +14,7 @@ import {
   StyledDateContainer,
   PostOptionsIconContainer,
   PostOptionsIcon
-} from './PostStyles';
+} from './PostListStyles';
 import StyledOpenGraphComponent from '~/components/MetatagsBox/MetatagsBox';
 import Modal from '../UpdatePostModal/UpdatePostModal';
 
@@ -26,7 +26,7 @@ import { UrlFinder } from '~/helpers/FeedHelper';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-function Post({
+function PostList({
   id,
   str_post,
   url_image,
@@ -137,4 +137,4 @@ function Post({
   );
 }
 
-export default Post;
+export default PostList;

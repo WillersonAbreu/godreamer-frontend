@@ -1,86 +1,176 @@
 // React import
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
-import { Form } from '@unform/web';
+import {
+  TeamOutlined,
+  HighlightFilled,
+  UserAddOutlined,
+  ArrowLeftOutlined
+} from '@ant-design/icons';
 
-import { Button, Row, Col } from 'antd';
-
-import { UserOutlined, TeamOutlined, HighlightFilled, UserAddOutlined, ArrowLeftOutlined } from '@ant-design/icons';
+import { useParams, Redirect, useHistory } from 'react-router-dom';
 
 // Styles imports
 import {
   Container,
-  Roww,
+  LeftContainer,
+  Content,
+  MoreInfo,
   ColumnProfile,
-  Column,
+  RightContainer,
   ColumnOutros,
-  Ava,
-  InfoFont,
+  StyledAvatar,
   InfoFontAlter,
-  InfoAnswers,
   InfoSideAlter,
-  Buttonn,
-  Buttonn1,
-  ColumnDesc,
-  InfoDesc,
-  InfoAnswers1
- 
+  Buttonn
 } from './ProfileStyles';
 
+// Components
+import About from './components/About/About';
+import PostList from './components/PostList/PostList';
+
+// Url import
+import { GLOBAL_URL } from '~/global/shared/config';
+
+// Services
+import FeedService from '~/services/api/Feed';
+import UserService from '~/services/api/User';
+
+// Redux
+import { useSelector } from 'react-redux';
 
 export default function Profile() {
+  const userId = useState(0);
+  const [postList, setPostList] = useState([]);
+  const [refresh] = useState(false);
+  const params = useParams();
+  const history = useHistory();
+
+  useEffect(() => {
+    fetchUserProfile();
+    // fetchPosts();
+  }, [refresh]);
+
+  async function fetchUserProfile() {
+    try {
+      const { userName } = params;
+      const response = await UserService.byEmailOrName(userName);
+      // console.log(response[0]);
+      if (!response.length) {
+        history.push('/');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function fetchPosts() {
+    try {
+      const response = await FeedService.index(userId);
+      if (response.posts.length > 0) {
+        const transformedPostList = [];
+
+        // Modifying the image url and video url
+        response.posts.map(post => {
+          transformedPostList.push({
+            User: {
+              ...post.User,
+              ProfileImage:
+                post.User.ProfileImage === null
+                  ? null
+                  : `${GLOBAL_URL}static/profile/${post.User.ProfileImage.image_source}`
+            },
+            createdAt: post.createdAt,
+            id: post.id,
+            str_post: post.str_post,
+            url_image:
+              post.url_image === null
+                ? null
+                : `${GLOBAL_URL}static/post/${post.url_image}`,
+
+            url_video:
+              post.url_video === null
+                ? null
+                : `${GLOBAL_URL}static/post/${post.url_video}`,
+            user_id: post.user_id
+          });
+          return null;
+        });
+        setPostList(transformedPostList);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
-
     <Container>
-
-      <Roww>
-    
-      <ColumnProfile span={6}>
-      <h1>Perfil</h1>
-      <Ava size={175} icon={<UserOutlined />} />
-      <h1>Nome Sobre</h1>
-      </ColumnProfile>
-
-      <Column span={12}>
-      <h1>Informações Adicionais</h1>
-      <InfoFont>Data de nascimento:</InfoFont>
-      <InfoAnswers>03/09/2299</InfoAnswers>
-      
-      <InfoFont>Tipo de usuário:</InfoFont>
-      <InfoAnswers>Sonhador</InfoAnswers>
-
-      </Column>
-
-      <ColumnOutros span={4}>
-      <InfoFontAlter>Outros</InfoFontAlter>
-      <InfoSideAlter>Grupos</InfoSideAlter>
-      <Buttonn type="primary" shape="round" size="large" icon={<TeamOutlined />}>
-      </Buttonn>
-        <InfoSideAlter>Posts</InfoSideAlter>
-      <Buttonn type="primary"  shape="round" size="large" icon={<HighlightFilled />}>
-      </Buttonn>
-
-      <InfoSideAlter>Adicionar</InfoSideAlter>
-      <Buttonn type="primary"  shape="round" size="large" icon={<UserAddOutlined />}>
-      </Buttonn>
-      </ColumnOutros>
-      </Roww>
-
-      <Roww>
-      
-        <ColumnDesc span={24}>
-          <InfoDesc>Sobre o usuário</InfoDesc>
-          <InfoAnswers1>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pellentesque, diam nec malesuada tincidunt, tellus ex varius libero, sit amet viverra lectus turpis et arcu. Sed rhoncus ex id nisi sollicitudin, et eleifend eros aliquet. Duis euismod in lectus vel facilisis. Vestibulum eleifend at purus ac iaculis. Donec ultricies lorem id tincidunt tincidunt. Sed at interdum tortor, id sodales metus. Vestibulum scelerisque sapien eu magna bibendum pellentesque. Pellentesque ornare purus eget ex placerat pretium. In pharetra vehicula torto.</InfoAnswers1>
-        </ColumnDesc>
-        <Buttonn1 type="primary"  shape="round" size="large" icon={<ArrowLeftOutlined />}>
+      <LeftContainer>
+        <Buttonn
+          type="primary"
+          shape="round"
+          size="large"
+          icon={<ArrowLeftOutlined />}
+        >
           Voltar
-        </Buttonn1>
-      
-      </Roww>
+        </Buttonn>
+        <ColumnProfile>
+          <h1>Perfil</h1>
+          <StyledAvatar size={100} />
+          <h1>Nome Sobre</h1>
+        </ColumnProfile>
+        <MoreInfo>
+          <h2>Informações adicionais:</h2>
+          <hr style={{ display: 'flex', width: '100%' }} />
+          <h3>Data de nascimento:</h3>
+          <span>29/07/1992</span>
+          <hr style={{ display: 'flex', width: '100%' }} />
+          <h3>Tipo de usuário:</h3>
+          <span>Sonhador</span>
+        </MoreInfo>
+      </LeftContainer>
+      <Content>
+        {/* <About /> */}
+        {postList &&
+          postList.map(post => (
+            <PostList
+              key={post.id}
+              id={post.id}
+              str_post={post.str_post}
+              url_image={post.url_image}
+              url_video={post.url_video}
+              createdAt={post.createdAt}
+              User={post.User}
+              getPosts={fetchPosts}
+            />
+          ))}
+      </Content>
+      <RightContainer>
+        <ColumnOutros>
+          <InfoFontAlter>Outros</InfoFontAlter>
+          <InfoSideAlter>Grupos</InfoSideAlter>
+          <Buttonn
+            type="primary"
+            shape="round"
+            size="large"
+            icon={<TeamOutlined />}
+          ></Buttonn>
+          <InfoSideAlter>Posts</InfoSideAlter>
+          <Buttonn
+            type="primary"
+            shape="round"
+            size="large"
+            icon={<HighlightFilled />}
+          ></Buttonn>
+          <InfoSideAlter>Adicionar</InfoSideAlter>
+          <Buttonn
+            type="primary"
+            shape="round"
+            size="large"
+            icon={<UserAddOutlined />}
+          ></Buttonn>
+        </ColumnOutros>
+      </RightContainer>
     </Container>
-  
-    
-
   );
 }

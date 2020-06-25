@@ -40,17 +40,16 @@ export default function Routes() {
           <Route exact path="/" component={Home} />
 
           <PrivateRoute isSigned={isSigned} path="/feed" component={Feed} />
+
           <PrivateRoute
             isSigned={isSigned}
-            exact
-            path="/profile"
-            component={Profile}
+            path="/group/:groupId"
+            component={GroupFeed}
           />
           <PrivateRoute
             isSigned={isSigned}
-            exact
-            path="/group/:groupId"
-            component={GroupFeed}
+            path="/profile/:userName"
+            component={Profile}
           />
         </CustomLayout>
       </Switch>

@@ -3,12 +3,64 @@ import styled from 'styled-components';
 
 import { Row, Col, Avatar, Button } from 'antd';
 
-import { UserOutlined } from '@ant-design/icons';
-
 export const Container = styled.div`
-display: absolute;
-width: 99%;
-height: 100%;
+  display: absolute;
+  width: 99%;
+  height: 100%;
+`;
+
+export const LeftContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  width: 20%;
+  height: 86.8vh;
+  border-right: 0.5px solid #ccc;
+  position: fixed;
+`;
+
+export const Content = styled.main`
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  min-height: 100%;
+  overflow-y: hidden;
+  position: absolute;
+  margin-left: 20%;
+`;
+
+export const RightContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  right: 0;
+  width: 20%;
+  height: 100%;
+  border-right: 0.5px solid #ccc;
+  position: fixed;
+`;
+
+export const ColumnOutros = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 2vh auto;
+  width: 70%;
+  -webkit-box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
+  -moz-box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
+  box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
+  border-radius: 10px;
+  justify-content: center;
+`;
+
+export const MoreInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 94%;
+  margin: 1vh auto;
+  -webkit-box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
+  -moz-box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
+  box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
+  border-radius: 10px;
 `;
 
 export const ImageContainer = styled.div`
@@ -42,112 +94,54 @@ export const Roww = styled(Row)`
   height: 100%;
 `;
 
-export const Column = styled(Col)`
-  margin-top: 5vh;
-  margin-left: 5vh;
-`;
-
-export const ColumnDesc = styled(Col)`
-  display: block;
-  margin-top: 2vh;
-  margin-left: 5vh;
-  justify-content: center;
-  position: static;
-  border
-
-`;
-
-export const ColumnOutros = styled(Col)`
-  margin-top: 5vh;
-  margin-left: 5vh;
-  -webkit-box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
-  -moz-box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
-  box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
-  border-radius: 10px;
-`;
-
-export const ColumnProfile = styled(Col)`
+export const ColumnProfile = styled.div`
+  display: flex;
+  flex-direction: column;
   text-align: center;
-  margin-top: 5vh;
-  margin-left: 5vh;
+  width: 94%;
+  margin: 2vh auto;
   -webkit-box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
   -moz-box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
   box-shadow: 0px 0px 10px -3px rgba(1, 33, 2, 1);
   border-radius: 10px;
 `;
 
-export const Ava = styled(Avatar)`
-  margin-top: 5vh;
-  margin-bottom: 5vh;
-`;
-
-export const InfoFont = styled.h2`
-margin-top: 7vh;
-font-size: 23px;
+export const StyledAvatar = styled(Avatar)`
+  display: flex;
+  margin: 0 auto;
 `;
 
 export const InfoFontAlter = styled.h1`
-margin-top: 1vh;
-text-align: center;
-`;
-
-export const InfoAnswers = styled.h2`
-font-size: 23px;
-margin-top: -2vh;
-margin-left: 1vh; 
-opacity: 0.5
-`;
-
-export const InfoAnswers1 = styled.h3`
-
-margin-top: -2vh;
-margin-left: 1vh; 
-margin-right: 2vh; 
-opacity: 0.5
+  margin-top: 1vh;
+  text-align: center;
 `;
 
 export const InfoSide = styled.h3`
-margin-top: 1vh;
-font-size: 20px;
-text-align: center;
+  margin-top: 1vh;
+  font-size: 20px;
+  text-align: center;
 `;
 
 export const InfoSideAlter = styled.h3`
-display: block;
-margin-top: 3vh;
-text-align: center;
-`;
-
-export const InfoDesc = styled.h1`
-text-align: center;
-
+  display: block;
+  margin-top: 3vh;
+  text-align: center;
 `;
 
 export const Buttonn = styled(Button)`
-display: block;
-margin-top: 1vh;
-margin-left: 12.5vh;
-justify-content: center;
-background-color: #30cb7e;
-border: none;
-&:hover {
+  && {
+    width: 50%;
+  }
+  display: block;
   background-color: #30cb7e;
-  opacity: 0.7;
-}
-&:active {
-  background-color: #30cb7e;
-  opacity: 0.7;
-}
-`;
-export const Buttonn1 = styled(Button)`
-display: block;
-margin-top: 3vh;
-margin-left: 5vh;
-justify-content: center;
-background-color: #30cb7e;
-border: none;
-&:hover {
-  background-color: #30cb7e;
-  opacity: 0.7;
-}
+  margin: 2vh auto;
+  border: none;
+  &:hover {
+    background-color: #30cb7e;
+    opacity: 0.7;
+  }
+  &:active {
+    background-color: #30cb7e;
+    opacity: 0.7;
+  }
 `;

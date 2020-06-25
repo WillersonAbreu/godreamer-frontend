@@ -8,6 +8,6 @@ export default function PrivateRoute({ path, component, exact, isSigned }) {
   return isSigned ? (
     <Route exact={exact} path={path} component={component} />
   ) : (
-    <Redirect to="/" />
+    isSigned === false && <Redirect to="/" />
   );
 }

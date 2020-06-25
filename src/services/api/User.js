@@ -22,4 +22,13 @@ export default class UserService {
       return error;
     }
   }
+
+  static async byEmailOrName(data) {
+    try {
+      const response = await axios.get(`/users/${data}`, AxiosConfig.config);
+      return response.data;
+    } catch (error) {
+      return error;
+    }
+  }
 }
