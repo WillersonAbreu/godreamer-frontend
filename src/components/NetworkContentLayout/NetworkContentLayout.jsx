@@ -9,16 +9,17 @@ import {
 } from './NetworkContentLayoutStyles';
 
 import Groups from './components/Groups/Groups';
+import Friends from './components/Friends/Friends';
 
 export default function NetworkContentLayout(props) {
   return (
     <Container>
       <GroupsSection>
-        <Groups></Groups>
+        <Groups />
       </GroupsSection>
       <FeedSection>{props.children}</FeedSection>
       <ChatSection>
-        <h1>Chats</h1>
+        <Friends />
       </ChatSection>
     </Container>
   );

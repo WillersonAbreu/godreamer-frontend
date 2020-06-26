@@ -42,6 +42,8 @@ function GroupPost({
 
   const { id: userId, name: userName, ProfileImage: profileImage } = User;
 
+  console.log(User);
+
   let bodyUrl;
 
   if (str_post) {
@@ -85,28 +87,34 @@ function GroupPost({
          * Show profile image if it exists
          */}
         {profileImage !== null && profileImage.image_source && (
-          <StyledTooltip
-            placement="right"
-            title={`Clique para ver o perfil de
+          <div style={{ marginLeft: '1vw' }}>
+            <StyledTooltip
+              placement="right"
+              title={`Clique para ver o perfil de
              ${userName}`}
-          >
-            <StyledProfile
-              size="large"
-              src={`http://localhost:3333/static/profile/${profileImage.image_source}`}
-            />
-          </StyledTooltip>
+            >
+              <StyledProfile
+                size="large"
+                src={`http://localhost:3333/static/profile/${profileImage.image_source}`}
+              />
+            </StyledTooltip>
+            <span>{userName}</span>
+          </div>
         )}
 
         {/**
          * Show first letter of user name if profile image does not exists
          */}
         {!profileImage && (
-          <StyledTooltip
-            placement="right"
-            title={`Clique para ver o perfil de ${userName}`}
-          >
-            <StyledProfile size="large">{userName[0]}</StyledProfile>
-          </StyledTooltip>
+          <div style={{ marginLeft: '1vw' }}>
+            <StyledTooltip
+              placement="right"
+              title={`Clique para ver o perfil de ${userName}`}
+            >
+              <StyledProfile size="large">{userName[0]}</StyledProfile>
+            </StyledTooltip>
+            <span>{userName}</span>
+          </div>
         )}
         {/**
          * Show delete delete and update options if the post is from logged user

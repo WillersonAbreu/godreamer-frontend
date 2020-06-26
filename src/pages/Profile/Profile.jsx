@@ -116,8 +116,11 @@ export default function Profile() {
         </Buttonn>
         <ColumnProfile>
           <h1>Perfil</h1>
-          <StyledAvatar size={100} />
-          <h1>Nome Sobre</h1>
+          <StyledAvatar
+            src="http://localhost:3333/static/profile/ae9268e333b52ef5a024d1175348280c.png"
+            size={100}
+          />
+          <h1>Willerson Abreu</h1>
         </ColumnProfile>
         <MoreInfo>
           <h2>Informações adicionais:</h2>
@@ -130,8 +133,8 @@ export default function Profile() {
         </MoreInfo>
       </LeftContainer>
       <Content>
-        {/* <About /> */}
-        {postList &&
+        <About />
+        {/* {postList &&
           postList.map(post => (
             <PostList
               key={post.id}
@@ -143,7 +146,7 @@ export default function Profile() {
               User={post.User}
               getPosts={fetchPosts}
             />
-          ))}
+          ))} */}
       </Content>
       <RightContainer>
         <ColumnOutros>

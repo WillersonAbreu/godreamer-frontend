@@ -29,9 +29,14 @@ export const StyledLogo = styled.img`
 `;
 
 export const RightContainer = styled.div`
+  margin: 1vh auto;
   display: flex;
   position: absolute;
   right: 5vw;
+  background-color: white;
+  border-radius: 5px;
+  width: 10vh;
+  height: 10vh;
 `;
 
 export default StyledHeader;

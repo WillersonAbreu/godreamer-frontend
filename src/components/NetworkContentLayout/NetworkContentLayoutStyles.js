@@ -22,7 +22,7 @@ export const GroupsSection = styled.div`
 export const FeedSection = styled.main`
   display: flex;
   flex-direction: column;
-  width: 69%;
+  width: 75.5%;
   min-height: 100%;
   /* border-left: 1px solid red; */
   /* border-right: 1px solid red; */
@@ -37,7 +37,7 @@ export const ChatSection = styled.div`
   flex-direction: column;
   width: 15%;
   min-height: 100%;
-  /* border-left: 1px solid blue; */
+  border-left: 0.5px solid #ccc;
   /* border-right: 1px solid blue; */
   position: fixed;
   right: 0;
