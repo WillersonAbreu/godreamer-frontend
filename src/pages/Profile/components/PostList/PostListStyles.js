@@ -15,7 +15,7 @@ export const Container = styled.div`
   flex-direction: column;
   margin: 10px auto;
   height: 20%;
-  width: 80%;
+  width: 99%;
   border-radius: 5px;
   justify-content: center;
   font-size: 13px;
@@ -78,7 +78,7 @@ export const ImageContainer = styled.img`
 export const StyledProfile = styled(Avatar)`
   display: flex;
   border: 0.5px solid #ccc;
-  margin: 1vw 1vw;
+  margin: 1vw auto;
 
   &:hover {
     cursor: pointer;

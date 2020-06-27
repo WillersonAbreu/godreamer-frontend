@@ -10,9 +10,12 @@ import store from '~/store';
 const { token } = store.getState().auth;
 
 export default class FollowGroupService {
-  static async followedGroups() {
+  static async followedGroups(userId) {
     try {
-      const response = await axios.get(`/followed-groups`, AxiosConfig.config);
+      const response = await axios.get(
+        `/followed-groups/${userId}`,
+        AxiosConfig.config
+      );
       return response.data;
     } catch (error) {
       return error;

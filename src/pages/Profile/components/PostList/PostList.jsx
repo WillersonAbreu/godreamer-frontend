@@ -77,13 +77,16 @@ function PostList({
          * Show profile image if it exists
          */}
         {profileImage && (
-          <StyledTooltip
-            placement="right"
-            title={`Clique para ver o perfil de ${userName}`}
-            onClick={() => history.push(`/profile/${userName}`)}
-          >
-            <StyledProfile size="large" src={profileImage} />
-          </StyledTooltip>
+          <div style={{ marginLeft: '1vw' }}>
+            <StyledTooltip
+              placement="right"
+              title={`Clique para ver o perfil de ${userName}`}
+              onClick={() => history.push(`/profile/${userName}`)}
+            >
+              <StyledProfile size="large" src={profileImage} />
+            </StyledTooltip>
+            <span>{userName}</span>
+          </div>
         )}
 
         {/**

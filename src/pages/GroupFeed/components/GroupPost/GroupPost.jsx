@@ -24,6 +24,7 @@ import { UrlFinder } from '~/helpers/FeedHelper';
 
 // Redux imports
 import { useSelector } from 'react-redux';
+import { GLOBAL_URL } from '~/global/shared/config';
 
 function GroupPost({
   id,
@@ -57,16 +58,12 @@ function GroupPost({
 
   const BodyContent = ({ url_video, url_image }) => {
     if (url_image !== null && url_video === null) {
-      return (
-        <ImageContainer
-          src={`http://localhost:3333/static/post/${url_image}`}
-        />
-      );
+      return <ImageContainer src={`${GLOBAL_URL}static/post/${url_image}`} />;
     } else if (url_video !== null) {
       return (
         <VideoContainer controls>
           <source
-            src={`http://localhost:3333/static/post/${url_video}`}
+            src={`${GLOBAL_URL}static/post/${url_video}`}
             type="video/mp4"
           />
         </VideoContainer>
@@ -95,7 +92,7 @@ function GroupPost({
             >
               <StyledProfile
                 size="large"
-                src={`http://localhost:3333/static/profile/${profileImage.image_source}`}
+                src={`${GLOBAL_URL}static/profile/${profileImage.image_source}`}
               />
             </StyledTooltip>
             <span>{userName}</span>

@@ -23,7 +23,7 @@ export const Content = styled.main`
   display: flex;
   flex-direction: column;
   width: 60%;
-  min-height: 100%;
+  /* max-height: 100%; */
   overflow-y: hidden;
   position: absolute;
   margin-left: 20%;
@@ -124,11 +124,10 @@ export const InfoSide = styled.h3`
 
 export const InfoSideAlter = styled.h3`
   display: block;
-  margin-top: 3vh;
   text-align: center;
 `;
 
-export const Buttonn = styled(Button)`
+export const StyledButton = styled(Button)`
   && {
     width: 50%;
   }
@@ -136,6 +135,13 @@ export const Buttonn = styled(Button)`
   background-color: #30cb7e;
   margin: 2vh auto;
   border: none;
+  text-align: center;
+
+  span {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
   &:hover {
     background-color: #30cb7e;
     opacity: 0.7;

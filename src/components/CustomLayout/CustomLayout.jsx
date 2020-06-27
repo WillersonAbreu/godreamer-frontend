@@ -17,7 +17,10 @@ import {
   RegisterSelect,
   StyledSelctIcon
 } from '~/pages/Home/components/RegisterForm/RegisterFormStyles';
+
 import { Form } from '@unform/web';
+
+import { GLOBAL_URL } from '~/global/shared/config';
 
 export default function CustomLayout(props) {
   const isSigned = localStorage.getItem('token');
@@ -57,7 +60,7 @@ export default function CustomLayout(props) {
             <RightContainer>
               <Avatar
                 style={{ margin: '2.5vh auto' }}
-                src="http://localhost:3333/static/profile/ae9268e333b52ef5a024d1175348280c.png"
+                src={`${GLOBAL_URL}static/profile/ae9268e333b52ef5a024d1175348280c.png`}
               />
             </RightContainer>
           </>

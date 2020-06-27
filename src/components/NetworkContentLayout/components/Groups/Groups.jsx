@@ -91,7 +91,7 @@ function Groups() {
                   {/* <Tooltip title="Clique para ir ao grupo">
                     <StyledGroupImage>
                       <img
-                        src={`http://localhost:3333/static/group/${group.group_image}`}
+                        src={`http://localhost:3333static/group/${group.group_image}`}
                       />
                     </StyledGroupImage>
                   </Tooltip> */}

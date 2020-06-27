@@ -1,11 +1,12 @@
 // React import
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   TeamOutlined,
   HighlightFilled,
   UserAddOutlined,
-  ArrowLeftOutlined
+  ArrowLeftOutlined,
+  EditOutlined
 } from '@ant-design/icons';
 
 import { useParams, Redirect, useHistory } from 'react-router-dom';
@@ -22,7 +23,7 @@ import {
   StyledAvatar,
   InfoFontAlter,
   InfoSideAlter,
-  Buttonn
+  StyledButton
 } from './ProfileStyles';
 
 // Components
@@ -39,34 +40,53 @@ import UserService from '~/services/api/User';
 // Redux
 import { useSelector } from 'react-redux';
 
+// Date FNS
+import { format, parseISO } from 'date-fns';
+import { zonedTimeToUtc } from 'date-fns-tz';
+import { Tooltip } from 'antd';
+import Groups from './components/Groups/Groups';
+
+const ptBrLocale = require('date-fns/locale/pt-BR/index');
+
 export default function Profile() {
-  const userId = useState(0);
+  const loggedUserId = useSelector(state => state.user.id);
   const [postList, setPostList] = useState([]);
+  const [userData, setUserData] = useState(null);
+  const [isPost, setIsPost] = useState(false);
+  const [isAbout, setIsAbout] = useState(true);
+  const [isGroups, setIsGroups] = useState(false);
   const [refresh] = useState(false);
   const params = useParams();
   const history = useHistory();
 
+  var userType = [];
+  userType['1'] = 'Sonhador';
+  userType['2'] = 'Mentor';
+
   useEffect(() => {
     fetchUserProfile();
-    // fetchPosts();
   }, [refresh]);
 
   async function fetchUserProfile() {
     try {
       const { userName } = params;
       const response = await UserService.byEmailOrName(userName);
-      // console.log(response[0]);
+      setUserData(response[0]);
       if (!response.length) {
         history.push('/');
+      } else {
+        fetchPosts(response[0].id);
       }
     } catch (error) {
+      history.push('/');
       console.log(error);
     }
   }
 
-  async function fetchPosts() {
+  async function fetchPosts(userId) {
     try {
       const response = await FeedService.index(userId);
+
       if (response.posts.length > 0) {
         const transformedPostList = [];
 
@@ -103,38 +123,79 @@ export default function Profile() {
     }
   }
 
+  function handleContent(type) {
+    if (type === 'groups') {
+      setIsPost(false);
+      setIsGroups(true);
+      setIsAbout(false);
+    } else if (type === 'posts') {
+      setIsPost(true);
+      setIsGroups(false);
+      setIsAbout(false);
+    } else if (type === 'about') {
+      setIsPost(false);
+      setIsGroups(false);
+      setIsAbout(true);
+    }
+  }
+
   return (
     <Container>
       <LeftContainer>
-        <Buttonn
+        <StyledButton
           type="primary"
           shape="round"
           size="large"
           icon={<ArrowLeftOutlined />}
-        >
-          Voltar
-        </Buttonn>
+          onClick={() => history.goBack()}
+        ></StyledButton>
+
         <ColumnProfile>
           <h1>Perfil</h1>
-          <StyledAvatar
-            src="http://localhost:3333/static/profile/ae9268e333b52ef5a024d1175348280c.png"
-            size={100}
-          />
-          <h1>Willerson Abreu</h1>
+          {userData && (
+            <StyledAvatar
+              src={`${GLOBAL_URL}static/profile/${userData.ProfileImage !==
+                null && userData.ProfileImage.image_source}`}
+              size={100}
+            >
+              {userData && !userData.ProfileImage && (
+                <span style={{ fontSize: '5vw' }}>
+                  {userData.name[0].toUpperCase()}
+                </span>
+              )}
+            </StyledAvatar>
+          )}
+          <h1>{userData && userData.name}</h1>
         </ColumnProfile>
         <MoreInfo>
           <h2>Informações adicionais:</h2>
           <hr style={{ display: 'flex', width: '100%' }} />
           <h3>Data de nascimento:</h3>
-          <span>29/07/1992</span>
+          <span>
+            {userData &&
+              format(
+                zonedTimeToUtc(
+                  parseISO(userData.birthdate),
+                  'America/Sao_Paulo'
+                ),
+                'dd/MM/yyyy',
+                {
+                  locale: ptBrLocale
+                }
+              )}
+          </span>
           <hr style={{ display: 'flex', width: '100%' }} />
           <h3>Tipo de usuário:</h3>
-          <span>Sonhador</span>
+          <span>
+            {userData &&
+              userType[userData.user_type === true ? '1' : userData.user_type]}
+          </span>
         </MoreInfo>
       </LeftContainer>
       <Content>
-        <About />
-        {/* {postList &&
+        {isAbout && <About aboutUser={userData && userData.about_user} />}
+        {isPost &&
+          postList &&
           postList.map(post => (
             <PostList
               key={post.id}
@@ -146,32 +207,62 @@ export default function Profile() {
               User={post.User}
               getPosts={fetchPosts}
             />
-          ))} */}
+          ))}
+        {isPost && !postList && <h2>O usuário não tem nenhum post ainda</h2>}
+        {isGroups && <Groups userId={userData.id} />}
       </Content>
       <RightContainer>
         <ColumnOutros>
           <InfoFontAlter>Outros</InfoFontAlter>
-          <InfoSideAlter>Grupos</InfoSideAlter>
-          <Buttonn
-            type="primary"
-            shape="round"
-            size="large"
-            icon={<TeamOutlined />}
-          ></Buttonn>
-          <InfoSideAlter>Posts</InfoSideAlter>
-          <Buttonn
-            type="primary"
-            shape="round"
-            size="large"
-            icon={<HighlightFilled />}
-          ></Buttonn>
-          <InfoSideAlter>Adicionar</InfoSideAlter>
-          <Buttonn
-            type="primary"
-            shape="round"
-            size="large"
-            icon={<UserAddOutlined />}
-          ></Buttonn>
+          <Tooltip title="Sobre o usuário">
+            <StyledButton
+              type="primary"
+              shape="round"
+              size="large"
+              onClick={() => handleContent('about')}
+            >
+              <span>Sobre</span>
+            </StyledButton>
+          </Tooltip>
+
+          <Tooltip title="Grupos que o usuário segue">
+            <StyledButton
+              type="primary"
+              shape="round"
+              size="large"
+              icon={<TeamOutlined />}
+              onClick={() => handleContent('groups')}
+            ></StyledButton>
+          </Tooltip>
+          <Tooltip title="Posts do usuário">
+            <StyledButton
+              type="primary"
+              shape="round"
+              size="large"
+              icon={<HighlightFilled />}
+              onClick={() => handleContent('posts')}
+            />
+          </Tooltip>
+          {userData && loggedUserId === userData.id && (
+            <Tooltip title="Alterar dados do perfil">
+              <StyledButton
+                type="primary"
+                shape="round"
+                size="large"
+                icon={<EditOutlined />}
+              />
+            </Tooltip>
+          )}
+          {userData && loggedUserId !== userData.id && (
+            <Tooltip title="Criar amizade">
+              <StyledButton
+                type="primary"
+                shape="round"
+                size="large"
+                icon={<UserAddOutlined />}
+              />
+            </Tooltip>
+          )}
         </ColumnOutros>
       </RightContainer>
     </Container>

@@ -46,6 +46,7 @@ import {
 import UserService from '~/services/api/User';
 import DonationService from '~/services/api/InfoDonation';
 import { message } from 'antd';
+import { GLOBAL_URL } from '~/global/shared/config';
 
 export default function GroupFeed() {
   const [groupData, setGroupData] = useState({});
@@ -150,7 +151,7 @@ export default function GroupFeed() {
           <GroupAvatar
             src={
               groupData.group_image
-                ? `http://localhost:3333/static/group/${groupData.group_image}`
+                ? `${GLOBAL_URL}static/group/${groupData.group_image}`
                 : groupData.group_name
                 ? groupData.group_name[0]
                 : ''
@@ -164,7 +165,7 @@ export default function GroupFeed() {
           <InfoAnswers>Criador</InfoAnswers>
           <ProfileAvatar
             size={90}
-            src={`http://localhost:3333/static/profile/${groupOwnerImage &&
+            src={`${GLOBAL_URL}static/profile/${groupOwnerImage &&
               groupOwnerImage}`}
           />
           <h3>{groupData.User && groupData.User.name}</h3>

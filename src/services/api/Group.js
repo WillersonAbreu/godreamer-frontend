@@ -50,7 +50,10 @@ export default class GroupService {
 
   static async followedGroups(userId) {
     try {
-      const response = await axios.get(`/followed-groups`, AxiosConfig.config);
+      const response = await axios.get(
+        `/followed-groups/${userId}`,
+        AxiosConfig.config
+      );
       return response.data;
     } catch (error) {
       return error;
