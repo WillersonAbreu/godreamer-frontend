@@ -78,7 +78,7 @@ export const ImageContainer = styled.img`
 export const StyledProfile = styled(Avatar)`
   display: flex;
   border: 0.5px solid #ccc;
-  margin: 1.5vw 1vw;
+  margin: 1.5vw auto;
 
   &:hover {
     cursor: pointer;

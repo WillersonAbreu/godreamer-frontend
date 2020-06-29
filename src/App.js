@@ -2,7 +2,7 @@
 import React from 'react';
 
 // Routes import
-import Routes from '~/routes/';
+import Routes from '~/routes';
 
 // Redux imports
 import { Provider } from 'react-redux';

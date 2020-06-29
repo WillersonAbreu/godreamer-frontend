@@ -6,9 +6,7 @@ import Chat from './Chat/Chat';
 function Friends() {
   const [chatWindows, setChatWindows] = useState([]);
 
-  useEffect(() => {
-    console.log(chatWindows);
-  }, [chatWindows]);
+  useEffect(() => {}, [chatWindows]);
 
   var friendList = [
     'Rayssa',

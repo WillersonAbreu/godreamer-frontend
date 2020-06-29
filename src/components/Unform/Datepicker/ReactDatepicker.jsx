@@ -23,6 +23,7 @@ const DatePicker = ({ name, ...rest }) => {
         ref={datepickerRef}
         selected={date}
         onChange={setDate}
+        dateFormat="d/MM/yyyy"
         {...rest}
       />
       {error && <span>{error}</span>}

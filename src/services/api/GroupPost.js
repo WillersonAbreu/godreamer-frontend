@@ -11,6 +11,7 @@ const { token } = store.getState().auth;
 
 export default class PostService {
   static async index(groupId) {
+    console.log(groupId);
     try {
       const response = await axios.get(
         `/group/posts/${groupId}`,

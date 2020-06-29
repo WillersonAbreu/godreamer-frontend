@@ -55,6 +55,11 @@ export default function LoginForm() {
         message.success('Login realizado com sucesso!');
         history.push('/feed');
       }
+
+      if (response.response) {
+        message.error(response.response.data.error);
+        return;
+      }
     } catch (error) {
       // Showing validation errors on
       const validationErrors = {};

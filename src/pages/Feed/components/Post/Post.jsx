@@ -101,6 +101,7 @@ function Post({
             >
               <StyledProfile size="large">{userName[0]}</StyledProfile>
             </StyledTooltip>
+            <span>{userName}</span>
           </div>
         )}
 

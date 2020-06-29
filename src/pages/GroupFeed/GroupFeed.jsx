@@ -57,7 +57,6 @@ export default function GroupFeed() {
   const { groupId } = useParams();
   const loggedUserId = useSelector(state => state.user.id);
   const [isOwner, setIsOwner] = useState(false);
-
   const history = useHistory();
 
   useEffect(() => {
@@ -68,8 +67,11 @@ export default function GroupFeed() {
 
   async function fetchGroupPosts() {
     try {
-      const { posts } = await GroupPostService.index(groupId);
-      setPostslist(posts);
+      if (groupId !== 0 || groupId !== null || groupId !== undefined) {
+        const { posts } = await GroupPostService.index(groupId);
+        console.log(posts);
+        setPostslist(posts);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -126,7 +128,6 @@ export default function GroupFeed() {
   async function unfollowGroup(groupId) {
     try {
       const response = await FollowGroupService.delete(groupId);
-      console.log(response);
       setIsFollowed(false);
       await fetchFollowedGroups();
       message.success('Você deixou de seguir o grupo');
@@ -147,7 +148,7 @@ export default function GroupFeed() {
         >
           Voltar
         </StyledButton>
-        <ColumnGroup>
+        <ColumnGroup style={{ width: '80%' }}>
           <GroupAvatar
             src={
               groupData.group_image
@@ -184,7 +185,10 @@ export default function GroupFeed() {
 
       <FeedSection>
         <FeedContainer>
-          <GroupForm getPosts={fetchGroupPosts} groupId={groupId} />
+          {isOwner && (
+            <GroupForm getPosts={fetchGroupPosts} groupId={groupId} />
+          )}
+
           {postsList &&
             postsList.map(post => (
               <GroupPost

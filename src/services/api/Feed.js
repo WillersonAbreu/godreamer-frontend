@@ -10,4 +10,13 @@ export default class PostService {
       return error;
     }
   }
+
+  static async getFriends() {
+    try {
+      const response = await axios.get(`/feed/friends`, AxiosConfig.config);
+      return response.data;
+    } catch (error) {
+      return error;
+    }
+  }
 }

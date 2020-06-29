@@ -9,7 +9,9 @@ import {
   EditOutlined
 } from '@ant-design/icons';
 
-import { useParams, Redirect, useHistory } from 'react-router-dom';
+import { RiUserUnfollowLine } from 'react-icons/ri';
+
+import { useParams, useHistory } from 'react-router-dom';
 
 // Styles imports
 import {
@@ -42,9 +44,10 @@ import { useSelector } from 'react-redux';
 
 // Date FNS
 import { format, parseISO } from 'date-fns';
-import { zonedTimeToUtc } from 'date-fns-tz';
-import { Tooltip } from 'antd';
+import { Tooltip, message } from 'antd';
 import Groups from './components/Groups/Groups';
+import UpdateUserModal from './components/UpdateUserModal/UpdateUserModal';
+import FriendshipService from '~/services/api/Friends';
 
 const ptBrLocale = require('date-fns/locale/pt-BR/index');
 
@@ -55,6 +58,8 @@ export default function Profile() {
   const [isPost, setIsPost] = useState(false);
   const [isAbout, setIsAbout] = useState(true);
   const [isGroups, setIsGroups] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isFriend, setIsFriend] = useState(false);
   const [refresh] = useState(false);
   const params = useParams();
   const history = useHistory();
@@ -68,6 +73,7 @@ export default function Profile() {
   }, [refresh]);
 
   async function fetchUserProfile() {
+    console.log('chamou');
     try {
       const { userName } = params;
       const response = await UserService.byEmailOrName(userName);
@@ -76,6 +82,7 @@ export default function Profile() {
         history.push('/');
       } else {
         fetchPosts(response[0].id);
+        fetchFriends(response[0].id);
       }
     } catch (error) {
       history.push('/');
@@ -123,6 +130,22 @@ export default function Profile() {
     }
   }
 
+  async function fetchFriends(userId) {
+    try {
+      const { friends } = await FeedService.getFriends();
+
+      if (friends) {
+        friends.map(friend => {
+          if (friend.id === userId) {
+            setIsFriend(friend.id === userId);
+          }
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   function handleContent(type) {
     if (type === 'groups') {
       setIsPost(false);
@@ -136,6 +159,33 @@ export default function Profile() {
       setIsPost(false);
       setIsGroups(false);
       setIsAbout(true);
+    }
+  }
+
+  async function handleFriendship(userId) {
+    try {
+      const response = await FriendshipService.create({ id_user: userId });
+
+      if (response.response) {
+        return message.error(response.response.data.error);
+      }
+      fetchFriends(userId);
+      return message.success(response.message);
+    } catch (error) {
+      message.error(error.message);
+    }
+  }
+
+  async function handleRemoveFriendship(userId) {
+    try {
+      const response = await FriendshipService.delete(userId);
+      if (response.response) {
+        return message.error(response.response.data.error);
+      }
+      setIsFriend(false);
+      return message.success(response.message);
+    } catch (error) {
+      message.error(error.message);
     }
   }
 
@@ -165,24 +215,14 @@ export default function Profile() {
               )}
             </StyledAvatar>
           )}
-          <h1>{userData && userData.name}</h1>
+          <h3>{userData && userData.name}</h3>
         </ColumnProfile>
         <MoreInfo>
-          <h2>Informações adicionais:</h2>
+          <h3>Informações adicionais</h3>
           <hr style={{ display: 'flex', width: '100%' }} />
           <h3>Data de nascimento:</h3>
           <span>
-            {userData &&
-              format(
-                zonedTimeToUtc(
-                  parseISO(userData.birthdate),
-                  'America/Sao_Paulo'
-                ),
-                'dd/MM/yyyy',
-                {
-                  locale: ptBrLocale
-                }
-              )}
+            {userData && format(parseISO(userData.birthdate), 'dd/MM/yyyy')}
           </span>
           <hr style={{ display: 'flex', width: '100%' }} />
           <h3>Tipo de usuário:</h3>
@@ -250,21 +290,47 @@ export default function Profile() {
                 shape="round"
                 size="large"
                 icon={<EditOutlined />}
+                onClick={() => setIsOpen(true)}
               />
             </Tooltip>
           )}
-          {userData && loggedUserId !== userData.id && (
-            <Tooltip title="Criar amizade">
+          {userData && loggedUserId !== userData.id && !isFriend && (
+            <Tooltip title={'Criar amizade'}>
               <StyledButton
                 type="primary"
                 shape="round"
                 size="large"
                 icon={<UserAddOutlined />}
+                onClick={() => handleFriendship(userData.id)}
+              />
+            </Tooltip>
+          )}
+          {userData && loggedUserId !== userData.id && isFriend && (
+            <Tooltip title="Desfazer amizade">
+              <StyledButton
+                type="primary"
+                shape="round"
+                size="large"
+                onClick={() => handleRemoveFriendship(userData.id)}
+                icon={<RiUserUnfollowLine />}
               />
             </Tooltip>
           )}
         </ColumnOutros>
       </RightContainer>
+
+      <UpdateUserModal
+        title="Alterar meus dados"
+        visible={isOpen}
+        setVisible={setIsOpen}
+        userId={loggedUserId}
+        name={userData && userData.name}
+        email={userData && userData.email}
+        birthdate={userData && userData.birthdate}
+        userType={userData && userData.user_type}
+        aboutUser={userData && userData.about_user}
+        getUserData={fetchUserProfile}
+      />
     </Container>
   );
 }
