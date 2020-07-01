@@ -25,6 +25,7 @@ import { UrlFinder } from '~/helpers/FeedHelper';
 // Redux imports
 import { useSelector } from 'react-redux';
 import { GLOBAL_URL } from '~/global/shared/config';
+import { useHistory } from 'react-router-dom';
 
 function GroupPost({
   id,
@@ -37,16 +38,12 @@ function GroupPost({
   groupId
 }) {
   const loggedUserId = useSelector(state => state.user.id);
-
+  const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
 
   const { id: userId, name: userName, ProfileImage: profileImage } = User;
-
-  console.log(User);
-
   let bodyUrl;
-
   if (str_post) {
     var regexResponse = UrlFinder(str_post);
 
@@ -89,6 +86,7 @@ function GroupPost({
               placement="right"
               title={`Clique para ver o perfil de
              ${userName}`}
+              onClick={() => history.push(`/profile/${userName}`)}
             >
               <StyledProfile
                 size="large"
@@ -107,6 +105,7 @@ function GroupPost({
             <StyledTooltip
               placement="right"
               title={`Clique para ver o perfil de ${userName}`}
+              onClick={() => history.push(`/profile/${userName}`)}
             >
               <StyledProfile size="large">{userName[0]}</StyledProfile>
             </StyledTooltip>

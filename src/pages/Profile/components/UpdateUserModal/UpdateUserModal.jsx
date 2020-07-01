@@ -7,11 +7,10 @@ import { Modal, message } from 'antd';
 import TextArea from '~/components/Unform/TextArea/TextArea';
 
 // Date FNS imports
-import { parseISO, addDays } from 'date-fns';
+import { parseISO } from 'date-fns';
 
 // Styled components imports
 import {
-  StyledFileUploader,
   StyledUpdateButton,
   StyledDeleteButton,
   UpdateInput,
@@ -33,7 +32,6 @@ function UpdateUserModal({
   title,
   visible,
   setVisible,
-  userId,
   name,
   email,
   birthdate,
@@ -123,13 +121,6 @@ function UpdateUserModal({
         footer={null}
         onCancel={handleClose}
       >
-        {/* <StyledFileUploader
-            showPreview={true}
-            icon={<PictureOutlined style={{ paddingTop: '0.7vh' }} />}
-            labelText="Escolha uma imagem"
-            name="url_image"
-          /> */}
-
         <StyledForm
           name="updatePost"
           onSubmit={handleSubmit}

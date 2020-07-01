@@ -11,7 +11,7 @@ import GroupItem from '../GroupItem/GrouItem';
 
 import { useHistory } from 'react-router-dom';
 
-function Groups({ userId }) {
+function Groups({ userId, userType }) {
   const [followedGroups, setFollowedGroups] = useState(null);
   const [ownGroups, setOwnGroups] = useState(null);
   const history = useHistory();
@@ -43,41 +43,45 @@ function Groups({ userId }) {
 
   return (
     <Container>
-      <h2>Grupos criados:</h2>
-      <Grid>
-        {!ownGroups && <span>O usuário não segue nenhum grupo</span>}
-        {ownGroups &&
-          ownGroups.map(group => (
-            <a
-              style={{ width: '14vw' }}
-              key={`${group.id}${group.group_name}`}
-              onClick={() => history.push(`/group/${group.id}`)}
-            >
-              <GroupItem
-                groupName={group.group_name}
-                groupImage={group.group_image}
-              />
-            </a>
-          ))}
-      </Grid>
-      <hr style={{ width: '100%' }} />
+      {userType === 2 && (
+        <>
+          <h2>Grupos criados:</h2>
+          <Grid>
+            {!ownGroups && <span>O usuário não segue nenhum grupo</span>}
+            {ownGroups !== null &&
+              ownGroups !== undefined &&
+              ownGroups.map(group => (
+                <a
+                  style={{ width: '14vw' }}
+                  key={`own-${group.id}`}
+                  onClick={() => history.push(`/group/${group.id}`)}
+                >
+                  <GroupItem
+                    groupName={group.group_name}
+                    groupImage={group.group_image}
+                  />
+                </a>
+              ))}
+          </Grid>
+          <hr style={{ width: '100%' }} />
+        </>
+      )}
+
       <h2>Grupos seguidos:</h2>
       <Grid>
         {!followedGroups && <span>O usuário não segue nenhum grupo</span>}
         {followedGroups &&
           followedGroups.map(group => (
-            <>
-              <a
-                style={{ width: '14vw' }}
-                key={`${group.Group.id}${group.Group.group_name}`}
-                onClick={() => history.push(`/group/${group.Group.id}`)}
-              >
-                <GroupItem
-                  groupName={group.Group.group_name}
-                  groupImage={group.Group.group_image}
-                />
-              </a>
-            </>
+            <a
+              style={{ width: '14vw' }}
+              key={`followed-${group.Group.id}`}
+              onClick={() => history.push(`/group/${group.Group.id}`)}
+            >
+              <GroupItem
+                groupName={group.Group.group_name}
+                groupImage={group.Group.group_image}
+              />
+            </a>
           ))}
       </Grid>
     </Container>

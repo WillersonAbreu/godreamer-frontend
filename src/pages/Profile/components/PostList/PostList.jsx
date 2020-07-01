@@ -135,6 +135,7 @@ function PostList({
         url_video={url_video}
         post_id={id}
         getPosts={getPosts}
+        userId={User && User.id}
       />
     </Container>
   );

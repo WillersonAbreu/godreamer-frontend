@@ -7,7 +7,7 @@ import { GLOBAL_URL } from '~/global/shared/config';
 
 // Redux
 import store from '~/store';
-const { token } = store.getState().auth;
+const token = localStorage.getItem('token');
 
 export default class GroupService {
   static async index() {

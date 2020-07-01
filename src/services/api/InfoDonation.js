@@ -7,7 +7,7 @@ import { GLOBAL_URL } from '~/global/shared/config';
 
 // Redux
 import store from '~/store';
-const { token } = store.getState().auth;
+const token = localStorage.getItem('token');
 
 export default class DonationService {
   static async index(groupOwnerId) {
@@ -22,10 +22,10 @@ export default class DonationService {
     }
   }
 
-  static async create(data, groupId) {
+  static async create(data) {
     try {
       const response = await axios.post(
-        `/donation/info/${groupId}`,
+        `/donation/info`,
         data,
         AxiosConfig.config
       );
@@ -35,23 +35,12 @@ export default class DonationService {
     }
   }
 
-  static async update(data, groupId, postId) {
+  static async update(data, userId) {
     try {
       const response = await axios.put(
-        `/donation/info/${groupId}/${postId}`,
+        `/donation/info/${userId}`,
         data,
-        AxiosConfig.changeConfig({
-          baseURL: GLOBAL_URL,
-          timeout: 20000,
-          headers: {
-            'Access-Control-Allow-Origin': '*',
-            Accept: 'application/json',
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'multiárt/form-data'
-          },
-          responseType: 'json',
-          crossDomain: true
-        })
+        AxiosConfig.config
       );
       return response.data;
     } catch (error) {
@@ -59,12 +48,9 @@ export default class DonationService {
     }
   }
 
-  static async delete(postId, groupId) {
+  static async delete() {
     try {
-      const response = await axios.delete(
-        `/donation/info/${groupId}/${postId}`,
-        AxiosConfig.config
-      );
+      const response = await axios.delete(`/donation/info`, AxiosConfig.config);
       return response.data;
     } catch (error) {
       return error;

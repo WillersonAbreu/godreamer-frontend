@@ -5,9 +5,8 @@ import AxiosConfig from './config/AxiosConfig';
 // Configs imports
 import { GLOBAL_URL } from '~/global/shared/config';
 
-// Redux
-import store from '~/store';
-const { token } = store.getState().auth;
+// Token
+const token = localStorage.getItem('token');
 
 export default class PostService {
   static async create(data) {

@@ -30,7 +30,7 @@ export default function GroupForm({ getPosts, groupId }) {
 
   const userId = useSelector(state => state.user.id);
 
-  async function handleSubmit(data) {
+  async function handleSubmit(data, { reset }) {
     const strPostSchema = Yup.object().shape({
       error: Yup.string().required(
         'É necessário inserir um texto ou uma imagem ou um vídeo ao menos'
@@ -75,6 +75,7 @@ export default function GroupForm({ getPosts, groupId }) {
       await GroupPostService.create(formData, groupId);
       message.success('Você registrou um novo post!');
       await getPosts();
+      reset();
     } catch (error) {
       // Showing validation errors on
       const validationErrors = {};

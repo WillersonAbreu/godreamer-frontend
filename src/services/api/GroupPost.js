@@ -7,11 +7,10 @@ import { GLOBAL_URL } from '~/global/shared/config';
 
 // Redux
 import store from '~/store';
-const { token } = store.getState().auth;
+const token = localStorage.getItem('token');
 
 export default class PostService {
   static async index(groupId) {
-    console.log(groupId);
     try {
       const response = await axios.get(
         `/group/posts/${groupId}`,

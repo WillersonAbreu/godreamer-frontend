@@ -109,6 +109,11 @@ export const ColumnProfile = styled.div`
 export const StyledAvatar = styled(Avatar)`
   display: flex;
   margin: 0 auto;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.7;
+  }
 `;
 
 export const InfoFontAlter = styled.h1`

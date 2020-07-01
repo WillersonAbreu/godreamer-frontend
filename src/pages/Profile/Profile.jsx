@@ -8,7 +8,7 @@ import {
   ArrowLeftOutlined,
   EditOutlined
 } from '@ant-design/icons';
-
+import { FaMoneyCheck } from 'react-icons/fa';
 import { RiUserUnfollowLine } from 'react-icons/ri';
 
 import { useParams, useHistory } from 'react-router-dom';
@@ -45,11 +45,15 @@ import { useSelector } from 'react-redux';
 // Date FNS
 import { format, parseISO } from 'date-fns';
 import { Tooltip, message } from 'antd';
+
+// Components
 import Groups from './components/Groups/Groups';
 import UpdateUserModal from './components/UpdateUserModal/UpdateUserModal';
-import FriendshipService from '~/services/api/Friends';
+import UpdateProfileImageModal from './components/UpdateProfileImageModal/UpdateProfileImageModal';
 
-const ptBrLocale = require('date-fns/locale/pt-BR/index');
+// Services
+import FriendshipService from '~/services/api/Friends';
+import UserInfoDonationModal from './components/UserInfoDonationModal/UserInfoDonationModal';
 
 export default function Profile() {
   const loggedUserId = useSelector(state => state.user.id);
@@ -59,8 +63,10 @@ export default function Profile() {
   const [isAbout, setIsAbout] = useState(true);
   const [isGroups, setIsGroups] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isDonationModalOpen, setIsDonationModalOpen] = useState(false);
   const [isFriend, setIsFriend] = useState(false);
-  const [refresh] = useState(false);
+  const [changeProfileImage, setChangeProfileImage] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const params = useParams();
   const history = useHistory();
 
@@ -73,7 +79,6 @@ export default function Profile() {
   }, [refresh]);
 
   async function fetchUserProfile() {
-    console.log('chamou');
     try {
       const { userName } = params;
       const response = await UserService.byEmailOrName(userName);
@@ -202,19 +207,43 @@ export default function Profile() {
 
         <ColumnProfile>
           <h1>Perfil</h1>
-          {userData && (
-            <StyledAvatar
-              src={`${GLOBAL_URL}static/profile/${userData.ProfileImage !==
-                null && userData.ProfileImage.image_source}`}
-              size={100}
-            >
-              {userData && !userData.ProfileImage && (
-                <span style={{ fontSize: '5vw' }}>
-                  {userData.name[0].toUpperCase()}
-                </span>
-              )}
-            </StyledAvatar>
-          )}
+          {userData &&
+            (userData.id === loggedUserId ? (
+              <Tooltip title="Alterar foto de perfil">
+                <StyledAvatar
+                  src={`${GLOBAL_URL}static/profile/${userData.ProfileImage !==
+                    null && userData.ProfileImage.image_source}`}
+                  size={100}
+                  onClick={() => setChangeProfileImage(true)}
+                >
+                  {userData && !userData.ProfileImage && (
+                    <span style={{ fontSize: '5vw' }}>
+                      {userData.name[0].toUpperCase()}
+                    </span>
+                  )}
+                </StyledAvatar>
+
+                <UpdateProfileImageModal
+                  visible={changeProfileImage}
+                  setVisible={setChangeProfileImage}
+                  currentImage={userData && userData.ProfileImage.image_source}
+                  userId={userData && userData.id}
+                  refresh={fetchUserProfile}
+                />
+              </Tooltip>
+            ) : (
+              <StyledAvatar
+                src={`${GLOBAL_URL}static/profile/${userData.ProfileImage !==
+                  null && userData.ProfileImage.image_source}`}
+                size={100}
+              >
+                {userData && !userData.ProfileImage && (
+                  <span style={{ fontSize: '5vw' }}>
+                    {userData.name[0].toUpperCase()}
+                  </span>
+                )}
+              </StyledAvatar>
+            ))}
           <h3>{userData && userData.name}</h3>
         </ColumnProfile>
         <MoreInfo>
@@ -246,10 +275,13 @@ export default function Profile() {
               createdAt={post.createdAt}
               User={post.User}
               getPosts={fetchPosts}
+              refresh={setRefresh}
             />
           ))}
         {isPost && !postList && <h2>O usuário não tem nenhum post ainda</h2>}
-        {isGroups && <Groups userId={userData.id} />}
+        {isGroups && (
+          <Groups userId={userData.id} userType={userData.user_type} />
+        )}
       </Content>
       <RightContainer>
         <ColumnOutros>
@@ -317,7 +349,33 @@ export default function Profile() {
             </Tooltip>
           )}
         </ColumnOutros>
+        {userData && loggedUserId === userData.id && (
+          <ColumnOutros style={{ textAlign: 'center' }}>
+            <h4>Alterar dados de doação</h4>
+            <Tooltip title="Alterar dados de doação">
+              <StyledButton
+                type="primary"
+                shape="round"
+                size="large"
+                icon={<FaMoneyCheck />}
+                onClick={() => setIsDonationModalOpen(true)}
+              />
+            </Tooltip>
+          </ColumnOutros>
+        )}
       </RightContainer>
+
+      <UserInfoDonationModal
+        title="Alterar meus dados"
+        visible={isDonationModalOpen}
+        setVisible={setIsDonationModalOpen}
+        userInfoDonation={
+          userData &&
+          userData.UserInfoDonation !== null &&
+          userData.UserInfoDonation
+        }
+        refresh={setRefresh}
+      />
 
       <UpdateUserModal
         title="Alterar meus dados"

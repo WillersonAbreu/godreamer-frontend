@@ -69,7 +69,6 @@ export default function GroupFeed() {
     try {
       if (groupId !== 0 || groupId !== null || groupId !== undefined) {
         const { posts } = await GroupPostService.index(groupId);
-        console.log(posts);
         setPostslist(posts);
       }
     } catch (error) {

@@ -29,13 +29,12 @@ import PostService from '~/services/api/Post'; //'~/services/api/Post';
 
 function UpdatePostModal({
   title,
-  loading,
   visible,
-  setLoading,
   setVisible,
   str_post,
   post_id,
-  getPosts
+  getPosts,
+  userId
 }) {
   async function handleSubmit(data) {
     const imageTypes = [];
@@ -74,7 +73,7 @@ function UpdatePostModal({
 
       // Making http request to the backend
       await PostService.update(formData, post_id);
-      await getPosts();
+      await getPosts(userId);
       message.success('Post atualizado com sucesso!');
     } catch (error) {
       message.error('Erro ao atualizar o post!');
@@ -85,7 +84,7 @@ function UpdatePostModal({
   async function handleDelete() {
     try {
       await PostService.delete(post_id);
-      await getPosts();
+      await getPosts(userId);
       message.success('Post deletado com sucesso!');
       setVisible(false);
     } catch (error) {

@@ -7,7 +7,6 @@ function UpdatePostModal({ title, visible, setVisible, donationInfo }) {
   function handleClose() {
     setVisible(false);
   }
-
   return (
     <>
       {donationInfo && (
@@ -36,8 +35,24 @@ function UpdatePostModal({ title, visible, setVisible, donationInfo }) {
                   Dados da conta para doação:
                 </strong>
                 <span style={{ textAlign: 'center' }}>
+                  <strong style={{ color: 'black' }}>Agência:</strong>
+                  {donationInfo.UserInfoDonation.agency_number}
+                </span>
+                <span style={{ textAlign: 'center' }}>
                   <strong style={{ color: 'black' }}>Conta:</strong>
                   {donationInfo.UserInfoDonation.account}
+                </span>
+                <span style={{ textAlign: 'center' }}>
+                  <strong style={{ color: 'black' }}>Banco:</strong>
+                  {donationInfo.UserInfoDonation.bank_name}
+                </span>
+                <span style={{ textAlign: 'center' }}>
+                  <strong style={{ color: 'black' }}>Nome:</strong>
+                  {donationInfo.name}
+                </span>
+                <span style={{ textAlign: 'center' }}>
+                  <strong style={{ color: 'black' }}>CPF:</strong>
+                  {donationInfo.UserInfoDonation.cpf}
                 </span>
               </>
             )}
