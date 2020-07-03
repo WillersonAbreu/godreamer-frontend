@@ -14,11 +14,11 @@ import {
 
 function MetatagsBox({ url }) {
   const [openGraphObject, setOpenGraphObject] = useState(null);
-  const [reload] = useState(false);
+  // const [reload] = useState(false);
 
   useEffect(() => {
     fetchMetas();
-  }, [reload]);
+  }, [url]);
 
   async function fetchMetas() {
     try {

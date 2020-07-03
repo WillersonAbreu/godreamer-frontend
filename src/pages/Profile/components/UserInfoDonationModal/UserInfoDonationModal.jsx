@@ -8,9 +8,7 @@ import { Form } from '@unform/web';
 
 // Styled components imports
 import {
-  StyledFileUploader,
   StyledUpdateButton,
-  StyledDeleteButton,
   StyledTextArea,
   StyledInput,
   StyledMaskedInput
@@ -29,8 +27,6 @@ function UserInfoDonationModal({
   userInfoDonation,
   refresh
 }) {
-  // console.log(userInfoDonation);
-
   async function handleSubmit(data) {
     try {
       if (!data.information || data.information === '') {

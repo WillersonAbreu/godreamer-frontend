@@ -6,9 +6,6 @@ import { useHistory } from 'react-router-dom';
 // Redux imports
 import { useSelector } from 'react-redux';
 
-// Ant design imports
-import { Tooltip } from 'antd';
-
 // Styled componetns imports
 import {
   Container,
@@ -16,8 +13,7 @@ import {
   OwnGroupsContainer,
   FollowedGroupsContainer,
   CreateGroupButton,
-  GroupItem,
-  StyledGroupImage
+  GroupItem
 } from './GroupsStyles';
 
 // Components imports

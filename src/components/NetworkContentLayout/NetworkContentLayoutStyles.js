@@ -22,13 +22,12 @@ export const GroupsSection = styled.div`
 export const FeedSection = styled.main`
   display: flex;
   flex-direction: column;
-  width: 75.5%;
+  flex-direction: column;
+  width: 64%;
   min-height: 100%;
-  /* border-left: 1px solid red; */
-  /* border-right: 1px solid red; */
   overflow-y: hidden;
   position: absolute;
-  margin-left: 15.35%;
+  margin-left: 21%;
 `;
 
 export const ChatSection = styled.div`

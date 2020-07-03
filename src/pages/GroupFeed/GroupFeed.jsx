@@ -9,12 +9,7 @@ import GroupPost from './components/GroupPost/GroupPost';
 
 import DonationModal from './components/GroupDonationModal/DonationModal';
 
-import {
-  UserOutlined,
-  ArrowLeftOutlined,
-  TeamOutlined,
-  PayCircleOutlined
-} from '@ant-design/icons';
+import { ArrowLeftOutlined, PayCircleOutlined } from '@ant-design/icons';
 
 import { useSelector } from 'react-redux';
 
@@ -105,7 +100,7 @@ export default function GroupFeed() {
       const { followedGroups } = await FollowGroupService.followedGroups();
 
       followedGroups.map(group => {
-        if (group.group_id == groupId) {
+        if (group.group_id === groupId) {
           setIsFollowed(true);
         }
       });
@@ -150,7 +145,7 @@ export default function GroupFeed() {
         <ColumnGroup style={{ width: '80%' }}>
           <GroupAvatar
             src={
-              groupData.group_image
+              groupData && groupData.group_image
                 ? `${GLOBAL_URL}static/group/${groupData.group_image}`
                 : groupData.group_name
                 ? groupData.group_name[0]

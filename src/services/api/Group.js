@@ -19,9 +19,16 @@ export default class GroupService {
     }
   }
 
-  static async getGroupByName() {
+  static async getGroupByName(groupName) {
     try {
-    } catch (error) {}
+      const response = await axios.get(
+        `/groups/${groupName}`,
+        AxiosConfig.config
+      );
+      return response.data;
+    } catch (error) {
+      return error;
+    }
   }
 
   static async getGroupById(groupId) {

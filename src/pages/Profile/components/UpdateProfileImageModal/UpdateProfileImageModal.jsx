@@ -6,23 +6,14 @@ import { Modal, message } from 'antd';
 // Unform imports
 import { Form } from '@unform/web';
 
-// Components imports
-import TextArea from '~/components/Unform/TextArea/TextArea';
-
 // Styled components imports
 import {
   StyledFileUploader,
-  StyledUpdateButton,
-  StyledDeleteButton
+  StyledUpdateButton
 } from './UpdateProfileImageModalStyles';
 
 // Icons imports
-import {
-  PictureOutlined,
-  PlaySquareOutlined,
-  DeliveredProcedureOutlined,
-  DeleteOutlined
-} from '@ant-design/icons';
+import { PictureOutlined, DeliveredProcedureOutlined } from '@ant-design/icons';
 
 // Service import
 import ProfileImageService from '~/services/api/ProfileImage'; //'~/services/api/Post';

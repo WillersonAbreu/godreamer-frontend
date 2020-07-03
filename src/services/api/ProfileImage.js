@@ -1,7 +1,7 @@
 import axios from 'axios';
 import AxiosConfig from './config/AxiosConfig';
 
-export default class UserService {
+export default class ProfileImageService {
   static async create(data, userId) {
     try {
       const response = await axios.post(

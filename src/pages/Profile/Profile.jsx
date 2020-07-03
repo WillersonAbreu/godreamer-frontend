@@ -24,7 +24,6 @@ import {
   ColumnOutros,
   StyledAvatar,
   InfoFontAlter,
-  InfoSideAlter,
   StyledButton
 } from './ProfileStyles';
 

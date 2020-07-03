@@ -21,6 +21,7 @@ import PrivateRoute from './PrivateRoute';
 
 // Helpers
 import { checkAuth } from '~/helpers/AuthHelper';
+import Search from '~/pages/Search/Search';
 
 // Exporting route service
 export default function Routes() {
@@ -38,9 +39,7 @@ export default function Routes() {
       <Switch>
         <CustomLayout isSigned={isSigned}>
           <Route exact path="/" component={Home} />
-
           <PrivateRoute isSigned={isSigned} path="/feed" component={Feed} />
-
           <PrivateRoute
             isSigned={isSigned}
             path="/group/:groupId"
@@ -50,6 +49,16 @@ export default function Routes() {
             isSigned={isSigned}
             path="/profile/:userName"
             component={Profile}
+          />
+          <PrivateRoute
+            isSigned={isSigned}
+            path="/search/user/:userNameOrEmail"
+            component={Search}
+          />
+          <PrivateRoute
+            isSigned={isSigned}
+            path="/search/group/:groupName"
+            component={Search}
           />
         </CustomLayout>
       </Switch>
