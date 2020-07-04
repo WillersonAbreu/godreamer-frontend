@@ -57,7 +57,7 @@ export default function Feed() {
         setPostList(transformedPostList);
       }
     } catch (error) {
-      console.log(error);
+      return;
     }
   }
 

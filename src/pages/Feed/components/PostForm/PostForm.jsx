@@ -32,7 +32,7 @@ function PostForm({ getPosts }) {
 
   const userId = useSelector(state => state.user.id);
 
-  async function handleSubmit(data) {
+  async function handleSubmit(data, { reset }) {
     const strPostSchema = Yup.object().shape({
       error: Yup.string().required(
         'É necessário inserir um texto ou uma imagem ou um vídeo ao menos'
@@ -75,10 +75,12 @@ function PostForm({ getPosts }) {
 
       // Making http request to the backend
       await PostService.create(formData);
+      reset();
       message.success('Você registrou um novo post!');
       await getPosts();
     } catch (error) {
       // Showing validation errors on
+      reset();
       const validationErrors = {};
       if (error instanceof Yup.ValidationError) {
         error.inner.forEach(error => {

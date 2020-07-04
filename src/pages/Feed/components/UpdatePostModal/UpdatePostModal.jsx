@@ -89,7 +89,6 @@ function UpdatePostModal({
       message.success('Post deletado com sucesso!');
       setVisible(false);
     } catch (error) {
-      console.log(error);
       message.error('Erro ao deletar o post!');
       setVisible(false);
     }

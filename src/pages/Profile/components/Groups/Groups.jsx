@@ -28,7 +28,7 @@ function Groups({ userId, userType }) {
       );
       setFollowedGroups(followedGroups);
     } catch (error) {
-      console.log(error);
+      return;
     }
   }
 
@@ -37,7 +37,7 @@ function Groups({ userId, userType }) {
       const { myGroups } = await GroupService.myGroups(userId);
       setOwnGroups(myGroups);
     } catch (error) {
-      console.log(error);
+      return;
     }
   }
 

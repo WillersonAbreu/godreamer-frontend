@@ -21,7 +21,7 @@ function Friends() {
         setFriendList(conversations);
       }
     } catch (error) {
-      console.log(error);
+      return;
     }
   }
 
@@ -29,7 +29,6 @@ function Friends() {
     try {
       let hasUser = chatWindows.indexOf(user);
 
-      // console.log(hasUser);
       if (hasUser === -1) {
         if (chatWindows.length < 3) {
           setChatWindows([...chatWindows, user]);
@@ -40,7 +39,7 @@ function Friends() {
         message.error('Já tem uma janela com de chat aberta com esse amigo');
       }
     } catch (error) {
-      console.log(error);
+      return;
     }
   }
 

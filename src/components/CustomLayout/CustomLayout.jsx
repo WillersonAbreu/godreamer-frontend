@@ -41,6 +41,7 @@ import { useHistory } from 'react-router-dom';
 import { removeToken } from '~/helpers/AuthHelper';
 
 export default function CustomLayout(props) {
+  const [profileImage, setProfileImage] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const isSigned = localStorage.getItem('token');
@@ -49,7 +50,9 @@ export default function CustomLayout(props) {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  useEffect(() => {}, [isSigned]);
+  useEffect(() => {
+    getProfileImage();
+  }, [isSigned, user]);
 
   async function handleSearch(data, { reset }) {
     try {
@@ -94,6 +97,22 @@ export default function CustomLayout(props) {
     dispatch(UserActions.clearUser());
     removeToken();
     history.push('/');
+  }
+
+  async function getProfileImage() {
+    try {
+      if (user.id) {
+        const profileImage = await UserService.getProfileImage(user.id);
+        console.log(profileImage);
+        if (profileImage !== null) {
+          setProfileImage(profileImage.image_source);
+        }
+      } else {
+        console.log('n tem id');
+      }
+    } catch (error) {
+      return;
+    }
   }
 
   return (
@@ -144,7 +163,7 @@ export default function CustomLayout(props) {
                 <StyledAvatar
                   size={35}
                   style={{ margin: '2.5vh auto', backgroundColor: 'white' }}
-                  src={`${GLOBAL_URL}static/profile/ae9268e333b52ef5a024d1175348280c.png`}
+                  src={`${GLOBAL_URL}static/profile/${profileImage}`}
                 />
               </Tooltip>
               <GearWrapper

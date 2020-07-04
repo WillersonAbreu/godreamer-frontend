@@ -67,7 +67,7 @@ export default function GroupFeed() {
         setPostslist(posts);
       }
     } catch (error) {
-      console.log(error);
+      return;
     }
   }
 
@@ -80,7 +80,7 @@ export default function GroupFeed() {
     } catch (error) {
       message.error('Grupo inexistente, ou foi deletado pelo criador!');
       history.push('/feed');
-      console.log(error);
+      return;
     }
   }
 
@@ -93,7 +93,7 @@ export default function GroupFeed() {
         }
       }
     } catch (error) {
-      console.log(error);
+      return;
     }
   }
 
@@ -107,7 +107,7 @@ export default function GroupFeed() {
         }
       });
     } catch (error) {
-      console.log(error);
+      return;
     }
   }
 
@@ -117,7 +117,7 @@ export default function GroupFeed() {
       await fetchFollowedGroups();
       message.success('Você está seguindo o grupo agora');
     } catch (error) {
-      console.log(error);
+      return;
     }
   }
 
@@ -128,7 +128,7 @@ export default function GroupFeed() {
       await fetchFollowedGroups();
       message.success('Você deixou de seguir o grupo');
     } catch (error) {
-      console.log(error);
+      return;
     }
   }
 

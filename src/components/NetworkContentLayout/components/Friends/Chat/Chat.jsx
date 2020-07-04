@@ -25,7 +25,6 @@ function Chat({ aux, userName, close, conversationId }) {
   const [hasMessage, setHasMessage] = useState(false);
 
   useEffect(() => {
-    // console.log(userName);
     fetchMessages();
   }, []);
 
@@ -35,22 +34,23 @@ function Chat({ aux, userName, close, conversationId }) {
 
       if (conversations.length > 0) {
         setMessagesList(conversations);
-        // console.log(conversations);
       }
     } catch (error) {
-      // console.log(error);
+      return;
     }
   }
 
-  async function handleMessage(data) {
+  async function handleMessage(data, { reset }) {
     try {
       if (!data.body_message) {
         message.error('É necessário inserir uma mensagem');
         return;
       }
       const response = await ChatService.create(conversationId, data);
+      reset();
       setMessagesList([...messagesList, response]);
     } catch (error) {
+      reset();
       message.error('Erro ao enviar a mensagem, tente mais tarde.');
     }
   }

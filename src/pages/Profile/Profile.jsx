@@ -85,14 +85,12 @@ export default function Profile() {
       if (!response.length) {
         history.push('/');
       } else {
-        console.log(response[0]);
         setUserData(response[0]);
         fetchPosts(response[0].id);
         fetchFriends(response[0].id);
       }
     } catch (error) {
       history.push('/');
-      console.log(error);
     }
   }
 
@@ -100,18 +98,11 @@ export default function Profile() {
     try {
       const { posts } = await FeedService.specificUserIndex(userId);
 
-      // console.log(posts);
-
       if (posts.length > 0) {
         const transformedPostList = [];
 
         // Modifying the image url and video url
         posts.map(post => {
-          // post.User.ProfileImage =
-          //   userData && userData.ProfileImage
-          //     ? userData.ProfileImage.image_source
-          //     : null;
-
           transformedPostList.push({
             User: {
               ...post.User,
@@ -140,7 +131,7 @@ export default function Profile() {
         setPostList(transformedPostList);
       }
     } catch (error) {
-      console.log(error);
+      return;
     }
   }
 
@@ -156,7 +147,7 @@ export default function Profile() {
         });
       }
     } catch (error) {
-      console.log(error);
+      return;
     }
   }
 
@@ -235,7 +226,11 @@ export default function Profile() {
                 <UpdateProfileImageModal
                   visible={changeProfileImage}
                   setVisible={setChangeProfileImage}
-                  currentImage={userData && userData.ProfileImage.image_source}
+                  currentImage={
+                    userData &&
+                    userData.ProfileImage &&
+                    userData.ProfileImage.image_source
+                  }
                   userId={userData && userData.id}
                   refresh={fetchUserProfile}
                 />

@@ -83,7 +83,6 @@ function UpdateUserModal({
       message.success('Dados atualizados com sucesso!');
       handleClose();
     } catch (error) {
-      console.log(error);
       message.error('Erro ao atualizar os dados!');
     }
   }
@@ -95,7 +94,6 @@ function UpdateUserModal({
       message.success('Conta encerrada com sucesso!');
       setVisible(false);
     } catch (error) {
-      console.log(error);
       message.error('Erro ao encerrar a conta!');
       setVisible(false);
     }

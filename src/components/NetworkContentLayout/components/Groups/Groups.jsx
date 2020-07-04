@@ -119,7 +119,12 @@ function Groups() {
             </GroupItem>
           ))}
       </FollowedGroupsContainer>
-      <Modal visible={visible} setVisible={setVisible} title="Novo grupo" />
+      <Modal
+        visible={visible}
+        setVisible={setVisible}
+        getGroups={fetchOwnGroups}
+        title="Novo grupo"
+      />
     </Container>
   );
 }

@@ -54,9 +54,7 @@ export default function Search() {
         setErrorMessageType('');
         setSearchList(response);
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 
   return (

@@ -17,7 +17,7 @@ import GroupService from '~/services/api/Group';
 // Styled components imports
 import { StyledUpdateButton, InputsContainer } from './GroupModalStyles';
 
-function UpdatePostModal({ visible, title, setVisible }) {
+function UpdatePostModal({ visible, title, setVisible, getGroups }) {
   const imageTypes = [];
   imageTypes['image/png'] = true;
   imageTypes['image/jpeg'] = true;
@@ -52,6 +52,7 @@ function UpdatePostModal({ visible, title, setVisible }) {
 
       await GroupService.create(formData);
       message.success('Grupo criado com sucesso!');
+      await getGroups();
       reset();
       setVisible(false);
     } catch (error) {
