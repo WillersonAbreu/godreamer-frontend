@@ -78,6 +78,8 @@ export default function GroupFeed() {
       setIsOwner(response[0].user_id === loggedUserId);
       fetchOwnerData(response[0].user_id);
     } catch (error) {
+      message.error('Grupo inexistente, ou foi deletado pelo criador!');
+      history.push('/feed');
       console.log(error);
     }
   }
@@ -143,17 +145,21 @@ export default function GroupFeed() {
           Voltar
         </StyledButton>
         <ColumnGroup style={{ width: '80%' }}>
-          <GroupAvatar
-            src={
-              groupData && groupData.group_image
-                ? `${GLOBAL_URL}static/group/${groupData.group_image}`
-                : groupData.group_name
-                ? groupData.group_name[0]
-                : ''
-            }
-            size={120}
-          />
-          <h3>{groupData && groupData.group_name}</h3>
+          {groupData && (
+            <>
+              <GroupAvatar
+                src={
+                  groupData.group_image
+                    ? `${GLOBAL_URL}static/group/${groupData.group_image}`
+                    : groupData.group_name
+                    ? groupData.group_name[0]
+                    : ''
+                }
+                size={120}
+              />
+              <h3>{groupData && groupData.group_name}</h3>
+            </>
+          )}
         </ColumnGroup>
 
         <ColumnGroup style={{ width: '80%' }}>
@@ -163,7 +169,7 @@ export default function GroupFeed() {
             src={`${GLOBAL_URL}static/profile/${groupOwnerImage &&
               groupOwnerImage}`}
           />
-          <h3>{groupData.User && groupData.User.name}</h3>
+          {groupData && <h3>{groupData.User && groupData.User.name}</h3>}
 
           <StyledButton
             type="primary"

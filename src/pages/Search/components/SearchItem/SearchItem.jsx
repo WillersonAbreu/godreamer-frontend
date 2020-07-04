@@ -10,9 +10,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import noImage from '~/assets/noimage.png';
 
 function SearchItem({ data }) {
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  useEffect(() => {}, [data]);
 
   const history = useHistory();
   const { userNameOrEmail, groupName } = useParams();
@@ -41,7 +39,9 @@ function SearchItem({ data }) {
       <ContentWrapper>
         {userNameOrEmail && (
           <>
-            <a onClick={() => history.push(`/group/${data.id}`)}>{data.name}</a>
+            <a onClick={() => history.push(`/profile/${data.name}`)}>
+              {data.name}
+            </a>
           </>
         )}
 

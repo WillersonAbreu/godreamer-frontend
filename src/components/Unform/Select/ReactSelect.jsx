@@ -2,6 +2,8 @@ import React, { useRef, useEffect } from 'react';
 
 import { useField } from '@unform/core';
 
+import { StyledSelect } from './ReactSelectStyles';
+
 const Select = ({ name, ...rest }) => {
   const selectRef = useRef(null);
 
@@ -24,7 +26,7 @@ const Select = ({ name, ...rest }) => {
 
   return (
     <>
-      <select
+      <StyledSelect
         onChange={e => {
           return (selectRef.current.value = e.currentTarget.value);
         }}
@@ -38,7 +40,7 @@ const Select = ({ name, ...rest }) => {
             {option.label}
           </option>
         ))}
-      </select>
+      </StyledSelect>
 
       {error && <span>{error}</span>}
     </>

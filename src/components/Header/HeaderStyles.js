@@ -33,10 +33,24 @@ export const RightContainer = styled.div`
   display: flex;
   position: absolute;
   right: 5vw;
-  background-color: white;
+  /* background-color: white; */
   border-radius: 5px;
-  width: 10vh;
+  width: 12vh;
   height: 10vh;
+`;
+
+export const GearWrapper = styled.div`
+  position: absolute;
+  right: 0;
+  bottom: 1.5vh;
+  color: white;
+
+  &:hover {
+    svg {
+      opacity: 0.8;
+    }
+    cursor: pointer;
+  }
 `;
 
 export default StyledHeader;

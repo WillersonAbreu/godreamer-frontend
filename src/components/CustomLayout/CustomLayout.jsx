@@ -1,38 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Style imports
-import { Container, ChildContainer } from './CustomLayoutStyles';
+import {
+  Container,
+  ChildContainer,
+  StyledSelect,
+  SelectIconWrapper,
+  FormContent,
+  SearchButton,
+  SearchButtonWrapper,
+  StyledInput,
+  StyledAvatar
+} from './CustomLayoutStyles';
 
 // Header import
 import Header, {
   StyledLogo,
   LogoWrapper,
-  RightContainer
+  RightContainer,
+  GearWrapper
 } from '../Header/HeaderStyles';
 
 // Logo import
 import logo from '../Header/Assets/logo.svg';
-import { Avatar, message } from 'antd';
+import { Avatar, message, Tooltip, Modal } from 'antd';
 
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
+import { BsFillGearFill } from 'react-icons/bs';
 import { FaSearch } from 'react-icons/fa';
 
 import { Form } from '@unform/web';
 
 import { GLOBAL_URL } from '~/global/shared/config';
-import Input from '../Unform/Input/Input';
-import Select from '../Unform/Select/ReactSelect';
 import UserService from '~/services/api/User';
 import { Creators as SearchActions } from '~/store/ducks/Search';
-import { useDispatch } from 'react-redux';
+import { Creators as UserActions } from '~/store/ducks/User';
+import { useDispatch, useSelector } from 'react-redux';
 import GroupService from '~/services/api/Group';
 import { useHistory } from 'react-router-dom';
+import { removeToken } from '~/helpers/AuthHelper';
 
 export default function CustomLayout(props) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const isSigned = localStorage.getItem('token');
+  const { user } = useSelector(state => state);
   const [icon, setIcon] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
+
+  useEffect(() => {}, [isSigned]);
 
   async function handleSearch(data, { reset }) {
     try {
@@ -65,11 +82,18 @@ export default function CustomLayout(props) {
           );
         }
       }
-      // reset();
+      reset();
     } catch (error) {
       // reset();
       return message.error('Erro ao fazer a busca');
     }
+  }
+
+  function handleLogout() {
+    setIsLogoutModalOpen(false);
+    dispatch(UserActions.clearUser());
+    removeToken();
+    history.push('/');
   }
 
   return (
@@ -89,100 +113,82 @@ export default function CustomLayout(props) {
                 width: '60%'
               }}
             >
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  width: '100%',
-                  margin: '0 auto'
-                }}
-              >
-                <Select
-                  // ref={current => console.log(current)}
+              <FormContent>
+                <StyledSelect
                   onFocus={() => setIcon(true)}
                   onBlur={() => setIcon(false)}
                   name="searchType"
-                  style={{
-                    width: '6vw',
-                    border: 'none',
-                    borderRadius: '0',
-                    WebkitAppearance: 'unset',
-                    backgroundColor: 'white',
-                    borderLeft: '0.5px solid #ccc',
-                    borderRight: '0.5px solid #ccc',
-                    outline: 'none',
-                    fontSize: '1.1vw'
-                  }}
                   options={[
                     { value: '1', label: 'Grupo' },
                     { value: '2', label: 'Usuário' }
                   ]}
                 />
 
-                <div
-                  style={{
-                    backgroundColor: 'white',
-                    borderRight: ' 0.5px solid #ccc'
-                  }}
-                >
+                <SelectIconWrapper>
                   {icon ? <CaretUpOutlined /> : <CaretDownOutlined />}
-                </div>
+                </SelectIconWrapper>
 
-                <Input
-                  style={{
-                    border: 'none',
-                    borderRadius: '0',
-                    borderRight: '0.5px solid #ccc',
-                    paddingLeft: '1vw'
-                  }}
-                  name="searchContent"
-                />
-                <div
-                  style={{
-                    height: '4vh',
-                    width: '3vw',
-                    backgroundColor: 'white',
-                    fontSize: '1.2vw',
-                    paddingTop: '0.5vh'
-                  }}
-                >
-                  <button
-                    style={{
-                      background: 'none',
-                      border: 'none',
-                      outline: 'none'
-                    }}
-                  >
+                <StyledInput name="searchContent" />
+                <SearchButtonWrapper>
+                  <SearchButton>
                     <FaSearch />
-                  </button>
-                </div>
-              </div>
-
-              {/* <SearchInput
-                addonBefore={
-                  <Select
-                    name="searchType"
-                    style={{
-                      width: '8vw'
-                    }}
-                    options={[
-                      { value: '1', label: 'Grupo' },
-                      { value: '2', label: 'Usuário' }
-                    ]}
-                  />
-                }
-                // addonAfter={
-                 
-                // }
-                style={{ width: '70%' }}
-                name="searchContent"
-              /> */}
+                  </SearchButton>
+                </SearchButtonWrapper>
+              </FormContent>
             </Form>
             <RightContainer>
-              <Avatar
-                style={{ margin: '2.5vh auto' }}
-                src={`${GLOBAL_URL}static/profile/ae9268e333b52ef5a024d1175348280c.png`}
-              />
+              <Tooltip
+                title="Verificar meu perfil"
+                onClick={() => history.push(`/profile/${user.name}`)}
+              >
+                <StyledAvatar
+                  size={35}
+                  style={{ margin: '2.5vh auto', backgroundColor: 'white' }}
+                  src={`${GLOBAL_URL}static/profile/ae9268e333b52ef5a024d1175348280c.png`}
+                />
+              </Tooltip>
+              <GearWrapper
+                onMouseEnter={() => setIsMenuOpen(true)}
+                onMouseLeave={() => setIsMenuOpen(false)}
+              >
+                <BsFillGearFill />
+                {isMenuOpen && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      backgroundColor: 'white',
+                      height: '10vh',
+                      width: '5vw',
+                      right: '-5vh',
+                      textAlign: 'center',
+                      border: '0.5px solid #ccc',
+                      borderRadius: '5px'
+                    }}
+                  >
+                    <Tooltip title="Sair da conta">
+                      <a onClick={() => setIsLogoutModalOpen(true)}>Sair</a>
+                    </Tooltip>
+                    <Tooltip title="Ver meu perfil">
+                      <a onClick={() => history.push(`/profile/${user.name}`)}>
+                        Perfil
+                      </a>
+                    </Tooltip>
+                  </div>
+                )}
+              </GearWrapper>
+              <Modal
+                visible={isLogoutModalOpen}
+                onCancel={() => setIsLogoutModalOpen(false)}
+                onOk={handleLogout}
+              >
+                <div style={{ display: 'flex' }}>
+                  <h4 style={{ margin: '0 auto' }}>
+                    Tem certeza de que deseja sair?
+                  </h4>
+                </div>
+              </Modal>
             </RightContainer>
           </>
         )}

@@ -34,7 +34,6 @@ function UpdatePostModal({
     imageTypes['image/gif'] = true;
 
     try {
-      console.log(data);
       let formData = new FormData();
 
       if (data.profile_image !== undefined) {

@@ -42,7 +42,6 @@ export default function Search() {
           : await GroupService.getGroupByName(searchContent);
 
       if (response.length <= 0) {
-        console.log('nada');
         let errorMessage =
           searchType === 'user'
             ? 'Nenhum usuário encontrado com esse nome ou email'
