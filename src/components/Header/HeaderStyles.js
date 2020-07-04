@@ -33,7 +33,7 @@ export const RightContainer = styled.div`
   display: flex;
   position: absolute;
   right: 5vw;
-  /* background-color: white; */
+
   border-radius: 5px;
   width: 12vh;
   height: 10vh;

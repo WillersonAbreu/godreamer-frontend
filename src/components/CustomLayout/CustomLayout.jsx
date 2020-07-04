@@ -82,7 +82,7 @@ export default function CustomLayout(props) {
           );
         }
       }
-      reset();
+      // reset();
     } catch (error) {
       // reset();
       return message.error('Erro ao fazer a busca');

@@ -9,7 +9,7 @@ import { GLOBAL_URL } from '~/global/shared/config';
 import store from '~/store';
 const token = localStorage.getItem('token');
 
-export default class PostService {
+export default class GroupPostService {
   static async index(groupId) {
     try {
       const response = await axios.get(

@@ -43,6 +43,8 @@ function PostList({
   const { id: userId, name: userName, ProfileImage: profileImage } = User;
   let bodyUrl;
 
+  // console.log(profileImage);
+
   if (str_post) {
     var regexResponse = UrlFinder(str_post);
 
@@ -83,7 +85,9 @@ function PostList({
               title={`Clique para ver o perfil de ${userName}`}
               onClick={() => history.push(`/profile/${userName}`)}
             >
-              <StyledProfile size="large" src={profileImage} />
+              <StyledProfile size="large" src={profileImage}>
+                {userName[0]}
+              </StyledProfile>
             </StyledTooltip>
             <span>{userName}</span>
           </div>

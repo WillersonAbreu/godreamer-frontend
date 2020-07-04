@@ -81,10 +81,12 @@ export default function Profile() {
     try {
       const { userName } = params;
       const response = await UserService.byEmailOrName(userName);
-      setUserData(response[0]);
+
       if (!response.length) {
         history.push('/');
       } else {
+        console.log(response[0]);
+        setUserData(response[0]);
         fetchPosts(response[0].id);
         fetchFriends(response[0].id);
       }
@@ -96,20 +98,28 @@ export default function Profile() {
 
   async function fetchPosts(userId) {
     try {
-      const response = await FeedService.index(userId);
+      const { posts } = await FeedService.specificUserIndex(userId);
 
-      if (response.posts.length > 0) {
+      // console.log(posts);
+
+      if (posts.length > 0) {
         const transformedPostList = [];
 
         // Modifying the image url and video url
-        response.posts.map(post => {
+        posts.map(post => {
+          // post.User.ProfileImage =
+          //   userData && userData.ProfileImage
+          //     ? userData.ProfileImage.image_source
+          //     : null;
+
           transformedPostList.push({
             User: {
               ...post.User,
               ProfileImage:
                 post.User.ProfileImage === null
                   ? null
-                  : `${GLOBAL_URL}static/profile/${post.User.ProfileImage.image_source}`
+                  : `${GLOBAL_URL}static/profile/${userData &&
+                      userData.ProfileImage.image_source}`
             },
             createdAt: post.createdAt,
             id: post.id,
@@ -264,19 +274,29 @@ export default function Profile() {
         {isAbout && <About aboutUser={userData && userData.about_user} />}
         {isPost &&
           postList &&
-          postList.map(post => (
-            <PostList
-              key={post.id}
-              id={post.id}
-              str_post={post.str_post}
-              url_image={post.url_image}
-              url_video={post.url_video}
-              createdAt={post.createdAt}
-              User={post.User}
-              getPosts={fetchPosts}
-              refresh={setRefresh}
-            />
-          ))}
+          postList.map(post => {
+            post.User.ProfileImage = null;
+            post.User.ProfileImage = {
+              image_source:
+                userData && userData.ProfileImage
+                  ? userData.ProfileImage.image_source
+                  : null
+            };
+
+            return (
+              <PostList
+                key={post.id}
+                id={post.id}
+                str_post={post.str_post}
+                url_image={post.url_image}
+                url_video={post.url_video}
+                createdAt={post.createdAt}
+                User={post.User}
+                getPosts={fetchPosts}
+                refresh={setRefresh}
+              />
+            );
+          })}
         {isPost && !postList && <h2>O usuário não tem nenhum post ainda</h2>}
         {isGroups && (
           <Groups userId={userData.id} userType={userData.user_type} />

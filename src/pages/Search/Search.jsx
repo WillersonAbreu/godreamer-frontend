@@ -27,6 +27,8 @@ export default function Search() {
       if (!userNameOrEmail) {
         fetchSearch('group', groupName);
       }
+    } else {
+      setSearchList(searchResponse);
     }
 
     if (searchResponse.length > 0 || searchList.length > 0) {
@@ -60,16 +62,17 @@ export default function Search() {
   return (
     <NetworkContentLayout>
       <Container>
-        {searchResponse &&
+        {/* {searchResponse &&
           searchResponse.map((item, index) => (
             <SearchItem key={index} type={searchType} data={item} />
-          ))}
+          ))} */}
 
         {setErrorMessageType !== '' ? (
           <h1 style={{ margin: '0 auto', textAlign: 'center' }}>
             {errorMessageType}
           </h1>
         ) : null}
+
         {searchList &&
           Array.from(searchList).map((item, index) => (
             <SearchItem key={index} type={searchType} data={item} />

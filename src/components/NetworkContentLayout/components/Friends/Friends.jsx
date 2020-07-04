@@ -2,23 +2,46 @@ import React, { useState, useEffect } from 'react';
 
 import { Container, FriendName } from './FriendsStyle';
 import Chat from './Chat/Chat';
+import { message } from 'antd';
+import FriendshipService from '~/services/api/Friends';
+import ChatService from '~/services/api/Chat';
 
 function Friends() {
   const [chatWindows, setChatWindows] = useState([]);
+  const [friendList, setFriendList] = useState([]);
 
-  useEffect(() => {}, [chatWindows]);
+  useEffect(() => {
+    fetchFriends();
+  }, [chatWindows]);
 
-  var friendList = [
-    'Rayssa',
-    'Leonel',
-    'Christian',
-    'Aline',
-    'José',
-    'Osvaldo'
-  ];
+  async function fetchFriends() {
+    try {
+      const { conversations } = await ChatService.index();
+      if (conversations.length > 0) {
+        setFriendList(conversations);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   function handleChat(user) {
-    setChatWindows([...chatWindows, user]);
+    try {
+      let hasUser = chatWindows.indexOf(user);
+
+      // console.log(hasUser);
+      if (hasUser === -1) {
+        if (chatWindows.length < 3) {
+          setChatWindows([...chatWindows, user]);
+        } else {
+          message.error('Só é permitido abrir três janelas de chat');
+        }
+      } else {
+        message.error('Já tem uma janela com de chat aberta com esse amigo');
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   function showChatWindows() {
@@ -26,35 +49,47 @@ function Friends() {
       return chatWindows.map((chatUser, index) => {
         var aux = index + 1;
         return (
-          <Chat key={index} aux={aux} userName={chatUser} />
-          // <div
-          //   key={index}
-          //   style={{
-          //     position: 'absolute',
-          //     bottom: '12vh',
-          //     left: `-${aux * 200}px`,
-          //     width: '200px',
-          //     height: '300px',
-          //     backgroundColor: 'white',
-          //     border: '0.5px solid #ccc',
-          //     borderRadius: '7px'
-          //   }}
-          // >
-          //   {chatUser}
-          // </div>
+          <Chat
+            conversationId={chatUser.id}
+            close={closeChatWindow}
+            key={index}
+            aux={aux}
+            userName={chatUser}
+          />
         );
       });
     }
   }
 
+  function closeChatWindow(userName) {
+    let windowIndex = chatWindows.indexOf(userName);
+
+    if (windowIndex !== -1) {
+      let newChatArray = chatWindows.filter(window => {
+        return window !== userName;
+      });
+      setChatWindows(newChatArray);
+    }
+  }
+
   return (
     <Container>
-      <h2>Amigos</h2>
-      {friendList.map(user => (
-        <FriendName key={user} onClick={() => handleChat(user)}>
-          {user}
-        </FriendName>
-      ))}
+      Amigos
+      {friendList.length <= 0 && (
+        <h5>
+          Você ainda não tem amigos, busque por amigos no campo de busca no topo
+          da página.
+        </h5>
+      )}
+      {friendList.length > 0 &&
+        friendList.map((friend, index) => (
+          <FriendName
+            key={`user-${friend.User.id}`}
+            onClick={() => handleChat(friend)}
+          >
+            {friend.User.name}
+          </FriendName>
+        ))}
       {showChatWindows()}
     </Container>
   );
