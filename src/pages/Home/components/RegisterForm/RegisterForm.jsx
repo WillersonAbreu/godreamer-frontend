@@ -44,8 +44,8 @@ export default function RegisterForm() {
       });
 
       await UserService.create(data);
-      reset();
       message.success('Usuário registrado com sucesso!');
+      reset();
     } catch (error) {
       // Showing validation errors on
       const validationErrors = {};
