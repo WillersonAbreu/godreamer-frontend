@@ -22,7 +22,7 @@ import { message } from 'antd';
 export default function RegisterForm() {
   const formRef = useRef(null);
 
-  async function handleSubmit(data) {
+  async function handleSubmit(data, { reset }) {
     try {
       // Remove all previous errors
       formRef.current.setErrors({});
@@ -44,6 +44,7 @@ export default function RegisterForm() {
       });
 
       await UserService.create(data);
+      reset();
       message.success('Usuário registrado com sucesso!');
     } catch (error) {
       // Showing validation errors on

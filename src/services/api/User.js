@@ -49,4 +49,13 @@ export default class UserService {
       return error;
     }
   }
+
+  static async byLikeEmailOrName(data) {
+    try {
+      const response = await axios.get(`/search/${data}`, AxiosConfig.config);
+      return response.data;
+    } catch (error) {
+      return error;
+    }
+  }
 }

@@ -76,7 +76,9 @@ export default function CustomLayout(props) {
             'É necessário inserir nome ou email do usuário que você está buscando'
           );
         }
-        const response = await UserService.byEmailOrName(data.searchContent);
+        const response = await UserService.byLikeEmailOrName(
+          data.searchContent
+        );
         if (response.length > 0) {
           dispatch(SearchActions.saveSearch(response));
           history.push(`/search/user/${data.searchContent}`);
