@@ -18,6 +18,10 @@ import { PictureOutlined, DeliveredProcedureOutlined } from '@ant-design/icons';
 // Service import
 import ProfileImageService from '~/services/api/ProfileImage'; //'~/services/api/Post';
 
+// Redux
+import { useDispatch, useSelector } from 'react-redux';
+import { Creators as GlobalActions } from '~/store/ducks/Global';
+
 function UpdatePostModal({
   title,
   visible,
@@ -26,6 +30,8 @@ function UpdatePostModal({
   currentImage,
   refresh
 }) {
+  const dispatch = useDispatch();
+  const globalRefresh = useSelector(state => state.global.refresh);
   async function handleSubmit(data) {
     const imageTypes = [];
     imageTypes['image/png'] = true;
@@ -49,6 +55,7 @@ function UpdatePostModal({
 
       // Making http request to the backend
       await ProfileImageService.create(formData, userId);
+      dispatch(GlobalActions.changeRefresh(!globalRefresh));
       await refresh();
       setVisible(false);
       message.success('Imagem atualizada com sucesso!');

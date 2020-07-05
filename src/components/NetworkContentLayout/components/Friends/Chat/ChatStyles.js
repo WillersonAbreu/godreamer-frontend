@@ -29,6 +29,8 @@ export const StyledForm = styled(Form)`
   flex-direction: row;
   justify-content: space-between;
   margin: 0 auto;
+  position: absolute;
+  bottom: 1vh;
 `;
 
 export const MessageInput = styled(Input)`
@@ -40,23 +42,23 @@ export const MessageInput = styled(Input)`
 `;
 
 export const MessagesWrapper = styled.div`
-  height: 37vh;
+  height: 38vh;
   width: 98%;
   margin: 0 auto;
   border: 0.5px solid #ccc;
+  position: absolute;
+  z-index: 0;
+  overflow-y: auto;
 `;
 
 export const MyMessage = styled.span`
   color: black;
-  max-height: 30%;
   background-color: lightblue;
-  right: 0px;
   float: right;
-  margin-right: 5px;
-  margin-top: 10px;
   border-radius: 5px;
-  width: 90%;
+  width: 80%;
   text-align: left;
+  margin: 1vh auto;
 `;
 
 export const FriendMessage = styled.span`
@@ -65,9 +67,8 @@ export const FriendMessage = styled.span`
   background-color: lightgreen;
   right: 0px;
   float: left;
-  margin-left: 5px;
-  margin-top: 10px;
   border-radius: 5px;
   width: 90%;
   text-align: left;
+  margin: 1vh auto;
 `;

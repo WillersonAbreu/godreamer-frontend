@@ -43,8 +43,6 @@ function PostList({
   const { id: userId, name: userName, ProfileImage: profileImage } = User;
   let bodyUrl;
 
-  // console.log(profileImage);
-
   if (str_post) {
     var regexResponse = UrlFinder(str_post);
 

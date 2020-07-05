@@ -46,13 +46,14 @@ export default function CustomLayout(props) {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const isSigned = localStorage.getItem('token');
   const { user } = useSelector(state => state);
+  const globalRefresh = useSelector(state => state.global.refresh);
   const [icon, setIcon] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
 
   useEffect(() => {
     getProfileImage();
-  }, [isSigned, user]);
+  }, [isSigned, user, globalRefresh]);
 
   async function handleSearch(data, { reset }) {
     try {
@@ -103,12 +104,9 @@ export default function CustomLayout(props) {
     try {
       if (user.id) {
         const profileImage = await UserService.getProfileImage(user.id);
-        console.log(profileImage);
         if (profileImage !== null) {
           setProfileImage(profileImage.image_source);
         }
-      } else {
-        console.log('n tem id');
       }
     } catch (error) {
       return;
@@ -129,7 +127,10 @@ export default function CustomLayout(props) {
                 margin: '5vh auto auto 11vh',
                 display: 'flex',
                 flexDirection: 'row',
-                width: '60%'
+
+                width: '50%',
+                position: 'absolute',
+                left: '22%'
               }}
             >
               <FormContent>

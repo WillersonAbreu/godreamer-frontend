@@ -39,9 +39,11 @@ import {
 } from './GroupFeedStyles';
 
 import UserService from '~/services/api/User';
-import DonationService from '~/services/api/InfoDonation';
 import { message } from 'antd';
 import { GLOBAL_URL } from '~/global/shared/config';
+
+// Socket IO
+import io from 'socket.io-client';
 
 export default function GroupFeed() {
   const [groupData, setGroupData] = useState({});
@@ -51,14 +53,22 @@ export default function GroupFeed() {
   const [groupOwnerImage, setGroupOwnerImage] = useState(null);
   const { groupId } = useParams();
   const loggedUserId = useSelector(state => state.user.id);
+  const [refresh, setRefresh] = useState(false);
   const [isOwner, setIsOwner] = useState(false);
   const history = useHistory();
+  const socket = io(GLOBAL_URL);
 
   useEffect(() => {
     fetchGroupData();
     fetchGroupPosts();
     fetchFollowedGroups();
-  }, [groupId]);
+  }, [groupId, refresh]);
+
+  socket.on('receivedNewPost', bool => {
+    if (bool) {
+      setRefresh(!refresh);
+    }
+  });
 
   async function fetchGroupPosts() {
     try {

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 
 // Ant design import
 import { PictureOutlined, PlaySquareOutlined } from '@ant-design/icons';
@@ -27,8 +27,20 @@ import * as Yup from 'yup';
 // Ant design imports
 import { message } from 'antd';
 
+import { GLOBAL_URL } from '~/global/shared/config';
+
+import io from 'socket.io-client';
+
 function PostForm({ getPosts }) {
   const formRef = useRef(null);
+  const [refresh, setRefresh] = useState(false);
+  const socket = io(GLOBAL_URL);
+
+  socket.on('receivedNewPost', bool => {
+    if (bool) {
+      setRefresh(!refresh);
+    }
+  });
 
   const userId = useSelector(state => state.user.id);
 

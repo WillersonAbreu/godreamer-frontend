@@ -25,10 +25,21 @@ import {
   StyledButton
 } from './GroupFormStyles';
 
-export default function GroupForm({ getPosts, groupId }) {
-  const formRef = useRef(null);
+import { GLOBAL_URL } from '~/global/shared/config';
 
+import io from 'socket.io-client';
+import { useState } from 'react';
+
+export default function GroupForm({ getPosts, groupId }) {
+  const [refresh, setRefresh] = useState(false);
   const userId = useSelector(state => state.user.id);
+  const socket = io(GLOBAL_URL);
+
+  socket.on('receivedNewPost', bool => {
+    if (bool) {
+      setRefresh(!refresh);
+    }
+  });
 
   async function handleSubmit(data, { reset }) {
     const strPostSchema = Yup.object().shape({
@@ -72,7 +83,8 @@ export default function GroupForm({ getPosts, groupId }) {
       formData.append('url_video', data.url_video);
 
       // Making http request to the backend
-      await GroupPostService.create(formData, groupId);
+      const response = await GroupPostService.create(formData, groupId);
+      socket.emit('newPost', response);
       message.success('Você registrou um novo post!');
       await getPosts();
       reset();

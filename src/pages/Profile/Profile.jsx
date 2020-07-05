@@ -30,6 +30,7 @@ import {
 // Components
 import About from './components/About/About';
 import PostList from './components/PostList/PostList';
+import DonationModal from './components/DonationModal/DonationModal';
 
 // Url import
 import { GLOBAL_URL } from '~/global/shared/config';
@@ -54,7 +55,11 @@ import UpdateProfileImageModal from './components/UpdateProfileImageModal/Update
 import FriendshipService from '~/services/api/Friends';
 import UserInfoDonationModal from './components/UserInfoDonationModal/UserInfoDonationModal';
 
+// Socket IO
+import io from 'socket.io-client';
+
 export default function Profile() {
+  const socket = io(GLOBAL_URL);
   const loggedUserId = useSelector(state => state.user.id);
   const [postList, setPostList] = useState([]);
   const [userData, setUserData] = useState(null);
@@ -63,6 +68,9 @@ export default function Profile() {
   const [isGroups, setIsGroups] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isDonationModalOpen, setIsDonationModalOpen] = useState(false);
+  const [isFriendDonationModalOpen, setIsFriendDonationModalOpen] = useState(
+    false
+  );
   const [isFriend, setIsFriend] = useState(false);
   const [changeProfileImage, setChangeProfileImage] = useState(false);
   const [refresh, setRefresh] = useState(false);
@@ -76,6 +84,12 @@ export default function Profile() {
   useEffect(() => {
     fetchUserProfile();
   }, [refresh]);
+
+  socket.on('receivedNewPost', bool => {
+    if (bool) {
+      setRefresh(!refresh);
+    }
+  });
 
   async function fetchUserProfile() {
     try {
@@ -363,10 +377,26 @@ export default function Profile() {
             </Tooltip>
           )}
         </ColumnOutros>
-        {userData && loggedUserId === userData.id && (
+        {userData && userData.user_type === 2
+          ? loggedUserId === userData.id && (
+              <ColumnOutros style={{ textAlign: 'center' }}>
+                <h4>Alterar dados de doação</h4>
+                <Tooltip title="Alterar dados de doação">
+                  <StyledButton
+                    type="primary"
+                    shape="round"
+                    size="large"
+                    icon={<FaMoneyCheck />}
+                    onClick={() => setIsDonationModalOpen(true)}
+                  />
+                </Tooltip>
+              </ColumnOutros>
+            )
+          : null}
+        {userData && loggedUserId !== userData.id && (
           <ColumnOutros style={{ textAlign: 'center' }}>
-            <h4>Alterar dados de doação</h4>
-            <Tooltip title="Alterar dados de doação">
+            <h4>Dados para doação deste usuário</h4>
+            <Tooltip title="Ver dados de doação">
               <StyledButton
                 type="primary"
                 shape="round"
@@ -377,6 +407,11 @@ export default function Profile() {
             </Tooltip>
           </ColumnOutros>
         )}
+        <DonationModal
+          visible={isFriendDonationModalOpen}
+          setVisible={setIsFriendDonationModalOpen}
+          donationInfo={userData && userData}
+        />
       </RightContainer>
 
       <UserInfoDonationModal

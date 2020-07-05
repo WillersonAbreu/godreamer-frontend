@@ -4,7 +4,8 @@ import { combineReducers } from 'redux';
 import auth from './Auth';
 import user from './User';
 import search from './Search';
+import global from './Global';
 
-const reducers = combineReducers({ auth, user, search });
+const reducers = combineReducers({ auth, user, search, global });
 
 export default reducers;

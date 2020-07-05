@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
+// Socket IO
+import io from 'socket.io-client';
+
 import {
   Container,
   CloseButton,
@@ -16,17 +19,38 @@ import { AiFillCloseCircle } from 'react-icons/ai';
 import { Tooltip, message } from 'antd';
 import { useHistory } from 'react-router-dom';
 import ChatService from '~/services/api/Chat';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { GLOBAL_URL } from '~/global/shared/config';
+import { useRef } from 'react';
 
 function Chat({ aux, userName, close, conversationId }) {
   const loggedUserId = useSelector(state => state.user.id);
   const history = useHistory();
   const [messagesList, setMessagesList] = useState([]);
+  const refresh = useSelector(state => state.global.refresh);
+  const disptach = useDispatch();
   const [hasMessage, setHasMessage] = useState(false);
+
+  const socket = io(GLOBAL_URL);
+
+  var messagesWrapperRef = useRef();
 
   useEffect(() => {
     fetchMessages();
-  }, []);
+  }, [refresh]);
+
+  function toTheBottom() {
+    try {
+      messagesWrapperRef.current.scrollTop = 1000;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  socket.on('messageReceived', newMessage => {
+    setMessagesList([...messagesList, newMessage]);
+    toTheBottom();
+  });
 
   async function fetchMessages() {
     try {
@@ -34,6 +58,7 @@ function Chat({ aux, userName, close, conversationId }) {
 
       if (conversations.length > 0) {
         setMessagesList(conversations);
+        toTheBottom();
       }
     } catch (error) {
       return;
@@ -47,8 +72,8 @@ function Chat({ aux, userName, close, conversationId }) {
         return;
       }
       const response = await ChatService.create(conversationId, data);
-      reset();
-      setMessagesList([...messagesList, response]);
+      socket.emit('chatMessage', response);
+      // reset();
     } catch (error) {
       reset();
       message.error('Erro ao enviar a mensagem, tente mais tarde.');
@@ -80,7 +105,7 @@ function Chat({ aux, userName, close, conversationId }) {
         </Tooltip>
       </div>
 
-      <MessagesWrapper name="chat">
+      <MessagesWrapper ref={messagesWrapperRef} name="chat">
         {messagesList &&
           messagesList.map((message, index) => {
             if (message.user_id === loggedUserId) {
@@ -92,7 +117,7 @@ function Chat({ aux, userName, close, conversationId }) {
             } else {
               return (
                 <FriendMessage key={`message-${message.user_id}-${message.id}`}>
-                  <strong>{userName.User.name} diz:</strong>
+                  <strong>{userName.User.name} diz: </strong>
                   {message.body_message}
                 </FriendMessage>
               );
